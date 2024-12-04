@@ -77,19 +77,21 @@ public class ProfileController extends CommomController{
 
 		List<Order> orderPage = orderRepository.findOrderByUserId(user.getUserId());
 
+		List<Order> filteredOrder = orderPage.stream().filter(order -> order.getAmount() != null).collect(Collectors.toList());
+
 		int pageSize = pageable.getPageSize();
 		int currentPage = pageable.getPageNumber();
 		int startItem = currentPage * pageSize;
 		List<Order> list;
 
-		if (orderPage.size() < startItem) {
+		if (filteredOrder.size() < startItem) {
 			list = Collections.emptyList();
 		} else {
-			int toIndex = Math.min(startItem + pageSize, orderPage.size());
-			list = orderPage.subList(startItem, toIndex);
+			int toIndex = Math.min(startItem + pageSize, filteredOrder.size());
+			list = filteredOrder.subList(startItem, toIndex);
 		}
 
-		Page<Order> orderPages = new PageImpl<Order>(list, PageRequest.of(currentPage, pageSize), orderPage.size());
+		Page<Order> orderPages = new PageImpl<Order>(list, PageRequest.of(currentPage, pageSize), filteredOrder.size());
 
 		return orderPages;
 	}

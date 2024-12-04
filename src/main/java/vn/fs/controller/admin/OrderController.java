@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -68,7 +69,9 @@ public class OrderController {
 	@GetMapping(value = "/orders")
 	public String orders(Model model, Principal principal) {
 
-		List<Order> orderDetails = orderRepository.findAll();
+		List<Order> orderDetailList = orderRepository.findAll();
+
+		List<Order> orderDetails = orderDetailList.stream().filter(order -> order.getAmount() != null).collect(Collectors.toList());
 		model.addAttribute("orderDetails", orderDetails);
 
 		return "admin/orders";
