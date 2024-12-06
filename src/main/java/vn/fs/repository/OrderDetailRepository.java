@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import vn.fs.dto.ProductStatistics;
 import vn.fs.entities.OrderDetail;
 
 
@@ -89,5 +90,13 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
     		+ "INNER JOIN user c ON p.user_id = c.user_id\r\n"
     		+ "GROUP BY c.user_id;", nativeQuery = true)
     public List<Object[]> reportCustommer();
+
+	@Query("SELECT new vn.fs.dto.ProductStatistics(p.productId, p.productName, COUNT(od.product.productId)) " +
+			"FROM OrderDetail od " +
+			"JOIN od.order o " +
+			"JOIN od.product p " +
+			"GROUP BY p.productId, p.productName " +
+			"ORDER BY COUNT(od.product.productId) DESC")
+	List<ProductStatistics> getProductMostPurchased();
 
 }

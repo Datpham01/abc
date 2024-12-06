@@ -88,6 +88,7 @@ public class OrderController {
 		// set active front-end
 		model.addAttribute("menuO", "menu");
 		return new ModelAndView("admin/editOrder", model);
+
 	}
 
 	@RequestMapping("/order/cancel/{order_id}")
