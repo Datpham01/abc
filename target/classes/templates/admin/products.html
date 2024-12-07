@@ -106,7 +106,7 @@
 																	<option th:each="item : ${categoryList}"
 					  													th:value="${item.categoryId}" th:text="${item.categoryName}"
 																		th:selected="${item.categoryId == product.category.categoryId}">
-																		Category Name
+																		Tên thể loại
 																	</option>
 																</select>
 															</div>
@@ -121,7 +121,7 @@
 																	<option th:each="item : ${originList}"
 																			th:value="${item.originId}" th:text="${item.originName}"
 																			th:selected="${item.originId == product.origin.originId}">
-																		Origin Name
+																		Tên xuất xứ
 																	</option>
 																</select>
 															</div>
@@ -152,7 +152,7 @@
 														</div>
 														<div class="col-sm-12">
 															<div class="form-group form-group-default">
-																<label>Images</label>
+																<label>Hình ảnh</label>
 																<input type="file" id="productImage" name="file" class="form-control">
 															</div>
 														</div>
@@ -269,12 +269,12 @@
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="javascript:void(0);">
-								Help
+								Hỗ Trợ
 							</a>
 						</li>
 						<li class="nav-item">
 							<a class="nav-link" href="javascript:void(0);">
-								About
+								Giới Thiệu
 							</a>
 						</li>
 					</ul>

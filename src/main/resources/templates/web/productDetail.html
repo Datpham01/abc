@@ -62,13 +62,20 @@
                         <label class="details-label off">- [[${product.discount + '%'}]]</label>
                     </div>
                     <ul class="details-preview">
-                        <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product"/></li>
+                        <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" style="width=300px"/></li>
                     </ul>
-                    <!--               <ul class="details-thumb"> -->
-                    <!--                 <li> -->
-                    <!--                 	<img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" /> -->
-                    <!--                 </li> -->
-                    <!--               </ul> -->
+                    <ul class="details-thumb">
+                        <li>
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                        </li>
+                        <li>
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                        </li>
+                        <li>
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                        </li>
+                    </ul>
+
                 </div>
             </div>
             <div class="col-lg-6">

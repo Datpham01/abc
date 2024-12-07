@@ -64,7 +64,7 @@
 					</div>
 					<div class="col-md-6 col-lg-6">
 						<div class="banner-img">
-							<img src="images/home/index/04.png" alt="index" />
+<!--							<img src="images/home/index/04.png" alt="index" />-->
 						</div>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 				<div class="row align-items-center">
 					<div class="col-md-6 col-lg-6">
 						<div class="banner-img">
-							<img src="images/home/index/03.png" alt="index" />
+<!--							<img src="images/home/index/03.png" alt="index" />-->
 						</div>
 					</div>
 					<div class="col-md-6 col-lg-6">
@@ -138,7 +138,7 @@
 										<i class="fas fa-heart"></i>
 									</button>
 									<a class="product-image" th:href="@{/productDetail(id=${item.productId})}">
-										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" />
+										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" style="width: 170px; height: 170px;" />
 										</a>
 									<div class="product-widget">
 										 
@@ -171,7 +171,7 @@
 									<h6 class="product-price">
 										<del>[[${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
 										<span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
-									</h6>							
+									</h6>
 									
 									 <th:block th:if="${item.quantity !=  0}">
 									  <a class="product-add1" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${item.productId})}">
@@ -202,17 +202,17 @@
 			</div>
 		</div>
 	</section>
-	<div class="section promo-part">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="promo-img">
-						<a href="javascript:void(0);"><img src="images/promo/home/10.jpg" alt="promo" /></a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<!--	<div class="section promo-part">-->
+<!--		<div class="container">-->
+<!--			<div class="row">-->
+<!--				<div class="col-lg-12">-->
+<!--					<div class="promo-img">-->
+<!--						<a href="javascript:void(0);"><img src="images/promo/home/10.jpg" alt="promo" /></a>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
 	<section class="section feature-part">
 		<div class="container">
 			<div class="row">
@@ -236,7 +236,7 @@
 										<i class="fas fa-heart"></i>
 									</button>
 									<a class="product-image" th:href="@{/productDetail(id=${item.productId})}">
-										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" />
+										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" style="width: 170px; height: 170px;" />
 										</a>
 									<div class="product-widget">
 										
@@ -306,7 +306,7 @@
 					<div class="countdown-content">
 						<h3>ƯU ĐÃI GIẢM GIÁ ĐẶC BIỆT CHO CÁC MẶT HÀNG</h3>
 						<p>Chương trình ưu đãi hàng tuần.</p>
-						<div class="countdown countdown-clock" data-countdown="2022/12/22">
+						<div class="countdown countdown-clock" data-countdown="2024/12/22">
 							<span class="countdown-time"><span>00</span><small>days</small></span><span
 								class="countdown-time"><span>00</span><small>hours</small></span><span
 								class="countdown-time"><span>00</span><small>minutes</small></span><span
@@ -352,7 +352,7 @@
 										<i class="fas fa-heart"></i>
 									</button>
 									<a class="product-image" th:href="@{/productDetail(id=${item.productId})}">
-										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" />
+										<img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" style="width: 170px; height: 170px;" />
 										</a>
 									<div class="product-widget">
 										
@@ -414,101 +414,7 @@
 			</div>
 		</div>
 	</section>
-<!-- 	<div class="section promo-part"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-sm-12 col-md-6 col-lg-6 px-xl-3"> -->
-<!-- 					<div class="promo-img"> -->
-<!-- 						<a href="javascript:void(0);"><img src="images/promo/home/04.jpg" alt="promo" /></a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 				<div class="col-sm-12 col-md-6 col-lg-6 px-xl-3"> -->
-<!-- 					<div class="promo-img"> -->
-<!-- 						<a href="javascript:void(0);"><img src="images/promo/home/05.jpg" alt="promo" /></a> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	
-	
-<!-- 	<section class="section testimonial-part"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-12"> -->
-<!-- 					<div class="section-heading"> -->
-<!-- 						<h2>phản hồi của khách hàng</h2> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class="row"> -->
-<!-- 				<div class="col-lg-12"> -->
-<!-- 					<div class="testimonial-slider slider-arrow"> -->
-<!-- 						<div class="testimonial-card"> -->
-<!-- 							<i class="fas fa-quote-left"></i> -->
-<!-- 							<p>Tôi đã khám phá Green ty qua lời giới thiệu của bạn bè và tôi thực sự ấn tượng! Trang web rất dễ sử dụng và tôi đã tìm thấy mọi thứ mình cần một cách nhanh chóng.  -->
-<!-- 							Tôi đã đặt một số sản phẩm và dịch vụ giao hàng của họ cực kỳ nhanh chóng và chuyên nghiệp. Tôi sẽ chắc chắn quay lại mua sắm ở đây trong tương lai và giới thiệu  -->
-<!-- 							Greenty cho bạn bè của tôi!" -->
-<!-- 							<h5>Kenz</h5> -->
-<!-- 							<ul> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 							</ul> -->
-<!-- 							<img src="images/avatar/01.jpg" alt="testimonial" /> -->
-<!-- 						</div> -->
-<!-- 						<div class="testimonial-card"> -->
-<!-- 							<i class="fas fa-quote-left"></i> -->
-<!-- 							<p>Tôi đã khám phá Green ty qua lời giới thiệu của bạn bè và tôi thực sự ấn tượng! Trang web rất dễ sử dụng và tôi đã tìm thấy mọi thứ mình cần một cách nhanh chóng.  -->
-<!-- 							Tôi đã đặt một số sản phẩm và dịch vụ giao hàng của họ cực kỳ nhanh chóng và chuyên nghiệp. Tôi sẽ chắc chắn quay lại mua sắm ở đây trong tương lai và giới thiệu  -->
-<!-- 							Greenty cho bạn bè của tôi!" -->
-<!-- 							<h5>Kenz</h5> -->
-<!-- 							<ul> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 							</ul> -->
-<!-- 							<img src="images/avatar/02.jpg" alt="testimonial" /> -->
-<!-- 						</div> -->
-<!-- 						<div class="testimonial-card"> -->
-<!-- 							<i class="fas fa-quote-left"></i> -->
-<!-- 							<p>Tôi đã khám phá Green ty qua lời giới thiệu của bạn bè và tôi thực sự ấn tượng! Trang web rất dễ sử dụng và tôi đã tìm thấy mọi thứ mình cần một cách nhanh chóng.  -->
-<!-- 							Tôi đã đặt một số sản phẩm và dịch vụ giao hàng của họ cực kỳ nhanh chóng và chuyên nghiệp. Tôi sẽ chắc chắn quay lại mua sắm ở đây trong tương lai và giới thiệu  -->
-<!-- 							Greenty cho bạn bè của tôi!" -->
-<!-- 							<h5>Kenz</h5> -->
-<!-- 							<ul> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 							</ul> -->
-<!-- 							<img src="images/avatar/03.jpg" alt="testimonial" /> -->
-<!-- 						</div> -->
-<!-- 						<div class="testimonial-card"> -->
-<!-- 							<i class="fas fa-quote-left"></i> -->
-<!-- 							<p>Tôi đã khám phá Green ty qua lời giới thiệu của bạn bè và tôi thực sự ấn tượng! Trang web rất dễ sử dụng và tôi đã tìm thấy mọi thứ mình cần một cách nhanh chóng.  -->
-<!-- 							Tôi đã đặt một số sản phẩm và dịch vụ giao hàng của họ cực kỳ nhanh chóng và chuyên nghiệp. Tôi sẽ chắc chắn quay lại mua sắm ở đây trong tương lai và giới thiệu  -->
-<!-- 							Greenty cho bạn bè của tôi!" -->
-<!-- 							<h5>Kenz</h5> -->
-<!-- 							<ul> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 								<li class="fas fa-star"></li> -->
-<!-- 							</ul> -->
-<!-- 							<img src="images/avatar/04.jpg" alt="testimonial" /> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</section> -->
+
 
 <!-- 	<section class="news-part" -->
 <!-- 		style="background: url(images/newsletter.jpg) no-repeat center"> -->
@@ -624,13 +530,13 @@
 	<script src="js/slick.js"></script>
 	<script src="js/main.js"></script>
 	
-	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-	<df-messenger
-	  intent="WELCOME"
-	  chat-title="Hỗ_trợ_khách_hàng"	
-	  agent-id="43d594b7-0744-4670-b827-407b2255c6f3"
-	  language-code="vi"
-	></df-messenger>
+<!--	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+<!--	<df-messenger-->
+<!--	  intent="WELCOME"-->
+<!--	  chat-title="Hỗ_trợ_khách_hàng"	-->
+<!--	  agent-id="43d594b7-0744-4670-b827-407b2255c6f3"-->
+<!--	  language-code="vi"-->
+<!--	></df-messenger>-->
 	
 </body>
 </html>

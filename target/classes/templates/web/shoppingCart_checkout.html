@@ -301,6 +301,7 @@
                                 <div class="form-group">
                                     <input
                                             type="tel"
+                                            pattern="[0-9]{10}"
                                             th:field="*{phone}"
                                             class="form-control"
                                             placeholder="Số điện thoại"
@@ -329,9 +330,7 @@
                                                                                  name="checkOut" checked> <strong><em>Ship
                                                 COD ( Thanh toán khi nhận hàng )</em></strong></label>
                                         </div>
-                                        <a href="javascript:void(0);">
-                                            <img src="/images/payment/jpg/01.jpg" alt="payment"/>
-                                        </a>
+
                                         <div class="radio">
                                             <label style="color: #119744"><input type="radio" value="paypal"
                                                                                  name="checkOut"> <strong><em>Thanh Toán
