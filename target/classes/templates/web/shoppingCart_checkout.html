@@ -109,9 +109,9 @@
                                              alt="product"/>
                                     </td>
                                     <td class="table-name"><h6>[[${item.product.productName}]]</h6></td>
-                                    <!--                                                             <td class="table-price">-->
-                                    <!--                                                               <h6>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]<small>/kg</small></h6>-->
-                                    <!--                                                             </td>-->
+<!--                                                             <td class="table-price">-->
+<!--                                                               <h6>[[${#numbers.formatDecimal(item.product.price - (item.product.price * item.product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')} +' đ']]<small>/kg</small></h6>-->
+<!--                                                             </td>-->
                                     <td class="table-brand"><h6>[[${item.product.category.categoryName}]]</h6></td>
 
                                     <td class="table-quantity">
@@ -120,8 +120,8 @@
                                                     th:onclick="'decreaseQuantity(\'' + ${item.product.productId} + '\')'">
                                                 -
                                             </button>
-                                            <input type="number" class="quantity-input" th:value="${item.quantity}"
-                                                   th:data-product="${item.product.productId}" min="1">
+                                            <input type="text" class="quantity-input" th:value="${item.quantity}"
+                                                   th:data-product="${item.product.productId}" readonly>
                                             <button class="increase-quantity" type="button"
                                                     th:onclick="'increaseQuantity(\'' + ${item.product.productId} + '\')'">
                                                 +
@@ -186,23 +186,6 @@
 
 
             <script th:inline="javascript">
-
-                function updateQuantity(input) {
-    const productId = input.getAttribute('data-product');
-    const newQuantity = input.value;
-
-    // Kiểm tra giá trị hợp lệ
-    if (newQuantity < 1) {
-        alert('Số lượng phải lớn hơn 0');
-        input.value = 1; // Reset về giá trị tối thiểu
-        return;
-    }
-
-    // Gửi dữ liệu số lượng mới đến server hoặc xử lý logic
-    console.log(`Product ID: ${productId}, New Quantity: ${newQuantity}`);
-    // TODO: Gọi API hoặc cập nhật giỏ hàng
-}
-
 
                 function updateQuantity(productId, quantity) {
                     fetch('/updateQuantity?productId=' + productId + '&quantity=' + quantity, {method: 'PUT'})
@@ -353,7 +336,7 @@
                                                                                  name="checkOut"> <strong><em>Thanh Toán
                                                 Với Paypal</em></strong></label>
                                         </div>
-                                        <!--                                        thanh toán vnpay-->
+<!--                                        thanh toán vnpay-->
                                         <div class="radio">
                                             <label style="color: #119744"><input type="radio" value="vnpay"
                                                                                  name="checkOut"> <strong><em>Thanh Toán
@@ -364,7 +347,7 @@
                                     <div class="checkout-proced">
                                         <button type="submit" class="btn btn-inline">Đặt hàng</button>
                                     </div>
-                                </div>
+                            </div>
                         </form>
 
                     </div>
