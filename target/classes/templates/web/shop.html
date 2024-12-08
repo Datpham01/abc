@@ -65,11 +65,11 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- item product -->
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4">
-              <div class="col" th:each="item : ${products}">
-                <div class="product-card">
+            <div class="row row-cols-3 row-cols-md-3 row-cols-lg-3 row-cols-xl-4" >
+              <div class="col" th:each="item : ${products}" >
+                <div class="product-card" style="width: 200px; height: 360px;">
                   <div class="product-media">
                     <div class="product-label">
                       <label class="label-text sale">- [[${item.discount + '%'}]]</label>
@@ -93,7 +93,7 @@
 	                    </th:block>
                    
                         <a class="product-image" href="javascript:void(0);">
-                            <img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product"/>
+                            <img th:src="@{'/loadImage?imageName='+${item.productImage}}" alt="product" style="width: 170px; height: 170px; text-align: center;"/>
                         </a>
                     <div class="product-widget">
                     
@@ -149,7 +149,7 @@
                       <del>[[${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
                       <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small></small></span>
                     </h6>
-                    
+
                    <th:block th:if="${item.quantity !=  0}">
 									  <a class="product-add1" title="Thêm giỏ hàng" th:href="@{/addToCart(productId=${item.productId})}">
 										<i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
@@ -188,9 +188,9 @@
             </div>
           </div>
         <div class="col-lg-3">
-            <div class="shop-widget-promo">
-              <a href="#"><img src="images/promo/shop/01.jpg" alt="promo" /></a>
-            </div>
+<!--            <div class="shop-widget-promo">-->
+<!--              <a href="#"><img src="images/promo/shop/01.jpg" alt="promo" /></a>-->
+<!--            </div>-->
             <div class="shop-widget">
               <h6 class="shop-widget-title">Theo thể loại</h6>
               

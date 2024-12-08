@@ -195,7 +195,7 @@
 											<tr th:each="item : ${products}">
 												<td>[[${item?.productId}]]</td>
 												<td>
-													<img th:src="@{'/loadImage?imageName='+${item.productImage}}" width="80px" alt="product" />
+													<img th:src="@{'/loadImage?imageName='+${item.productImage}}"  alt="product" />
 												</td>
 												<td>[[${item.productName}]]</td>
 												<td>[[${item.category.categoryName}]]</td>
