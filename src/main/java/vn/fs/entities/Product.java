@@ -32,6 +32,7 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long productId;
 	private String productName;
+	// bỏ cái này đi
 	private int quantity;
 	private double price;
 	private int discount;
