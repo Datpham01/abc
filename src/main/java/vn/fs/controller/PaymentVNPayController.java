@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.fs.config.vnpayconfig.VNPAYService;
 import vn.fs.entities.Order;
+import vn.fs.entities.OrderDetail;
+import vn.fs.entities.ProductInventory;
 import vn.fs.entities.User;
+import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.OrderRepository;
+import vn.fs.repository.ProductInventoryRepository;
 import vn.fs.repository.UserRepository;
 import vn.fs.service.ShoppingCartService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -35,6 +40,12 @@ public class PaymentVNPayController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ProductInventoryRepository productInventoryRepository;
+
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
 
     @GetMapping({"/create-order"})
     public String home(){
@@ -93,7 +104,6 @@ public class PaymentVNPayController {
         String totalPrice = request.getParameter("vnp_Amount");
 
         int amount = (Integer.parseInt(totalPrice)) / 100;
-
         Long orderId = Long.parseLong(orderInfo);
         Order order = orderRepository.findById(orderId).orElse(null);
         if (order == null) {
@@ -103,8 +113,19 @@ public class PaymentVNPayController {
         if (paymentStatus == 1) {
             order.setStatus(2);
             shoppingCartService.clear();
+            orderRepository.save(order);
+        } else {
+            if(order.getStatus() == 0){
+                List<OrderDetail> orderDetailList  = orderDetailRepository.findByOrderId(order.getOrderId());
+                for(OrderDetail item : orderDetailList) {
+                    ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(item.getProduct().getProductId());
+                    productInventory.setQuantity(productInventory.getQuantity() - item.getQuantity());
+                    productInventoryRepository.save(productInventory);
+                }
+                orderDetailRepository.deleteAllByOrder_OrderId(orderId);
+                orderRepository.deleteById(orderId);
+            }
         }
-        orderRepository.save(order);
 
         model.addAttribute("orderId", orderInfo);
         model.addAttribute("totalPrice", amount);

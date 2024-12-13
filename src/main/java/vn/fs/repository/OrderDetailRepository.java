@@ -112,4 +112,6 @@ public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> 
 			"ORDER BY COUNT(od.product.productId) DESC")
 	List<ProductStatistics> getProductMostPurchased();
 
+	void deleteAllByOrder_OrderId(Long orderId);
+
 }

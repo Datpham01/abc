@@ -264,6 +264,9 @@ public class CartController extends CommomController {
                 orderDetail.setProduct(cartItem.getProduct());
                 double unitPrice = cartItem.getProduct().getPrice();
                 orderDetail.setPrice(unitPrice);
+                ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(cartItem.getProduct().getProductId());
+                productInventory.setQuantity(productInventory.getQuantity() - cartItem.getQuantity());
+                productInventoryRepository.save(productInventory);
                 orderDetailRepository.save(orderDetail);
             }
 
@@ -290,6 +293,9 @@ public class CartController extends CommomController {
             orderDetail.setProduct(cartItem.getProduct());
             double unitPrice = cartItem.getProduct().getPrice();
             orderDetail.setPrice(unitPrice);
+            ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(cartItem.getProduct().getProductId());
+            productInventory.setQuantity(productInventory.getQuantity() - cartItem.getQuantity());
+            productInventoryRepository.save(productInventory);
             orderDetailRepository.save(orderDetail);
         }
 
