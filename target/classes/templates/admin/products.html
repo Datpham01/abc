@@ -6,7 +6,7 @@
 	<title>Harvert ViNa - Trang quản trị</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="/assets/img/icon.ico" type="image/x-icon"/>
-	
+
 	<!-- Fonts and icons -->
 	<script src="/assets/js/plugin/webfont/webfont.min.js"></script>
 	<script>
@@ -26,19 +26,19 @@
 	<link rel="stylesheet" href="/assets/css/demo.css">
 </head>
 <body>
-	<div class="wrapper">
+<div class="wrapper">
 	<!-- Header -->
-	
+
 	<th:block th:replace="~{admin/fragments/header :: header}"></th:block>
-	
+
 	<!-- End Header -->
-	
+
 	<!-- Navbar -->
-	
+
 	<th:block th:replace="~{admin/fragments/navbar :: navbar}"></th:block>
-	
+
 	<!-- End Navbar -->
-		
+
 	<div class="main-panel">
 		<div class="content">
 			<div class="page-inner">
@@ -64,191 +64,190 @@
 						</li>
 					</ul>
 				</div>
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<div class="d-flex align-items-center">
-									<h4 class="card-title" style="text-decoration: underline;">Quản lý sản phẩm</h4>
-									<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
-										<i class="fa fa-plus"></i>
-										Thêm mới
-									</button>
-								</div>
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-header">
+							<div class="d-flex align-items-center">
+								<h4 class="card-title" style="text-decoration: underline;">Quản lý sản phẩm</h4>
+								<button class="btn btn-primary btn-round ml-auto" data-toggle="modal" data-target="#addRowModal">
+									<i class="fa fa-plus"></i>
+									Thêm mới
+								</button>
 							</div>
-							<div class="card-body">
-								<!-- Modal -->
-								<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
-									<div class="modal-dialog" role="document">
-										<div class="modal-content">
-											<div class="modal-header no-bd">
-												<h5 class="modal-title">
+						</div>
+						<div class="card-body">
+							<!-- Modal -->
+							<div class="modal fade" id="addRowModal" tabindex="-1" role="dialog" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header no-bd">
+											<h5 class="modal-title">
 													<span class="fw-mediumbold" style="text-decoration: underline; color: black;">
-													thêm mới sản phẩm</span> 
-												</h5>
-												<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-													<span aria-hidden="true">&times;</span>
-												</button>
-											</div>
-											<div class="modal-body">
-												<form th:action="@{/admin/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
-													<div class="row">
-														<div class="col-sm-12">
-															<div class="form-group form-group-default">
-																<label>Tên sản phẩm</label>
-																<input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm...">
-															</div>
+													thêm mới sản phẩm</span>
+											</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<form th:action="@{/admin/addProduct}" th:object="${product}" method="post" enctype="multipart/form-data">
+												<div class="row">
+													<div class="col-sm-12">
+														<div class="form-group form-group-default">
+															<label>Tên sản phẩm</label>
+															<input th:field="*{productName}" id="productName" type="text" class="form-control" placeholder="Tên sản phẩm...">
 														</div>
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Thể loại</label>
-																<select class="form-control"
-																	 name="category" th:field="*{category.categoryId}" id="categoryId">
-																	<option th:each="item : ${categoryList}"
-					  													th:value="${item.categoryId}" th:text="${item.categoryName}"
+													</div>
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Thể loại</label>
+															<select class="form-control"
+																	name="category" th:field="*{category.categoryId}" id="categoryId">
+																<option th:each="item : ${categoryList}"
+																		th:value="${item.categoryId}" th:text="${item.categoryName}"
 																		th:selected="${item.categoryId == product.category.categoryId}">
-																		Tên thể loại
-																	</option>
-																</select>
-															</div>
+																	Tên thể loại
+																</option>
+															</select>
 														</div>
+													</div>
 
-<!--														origin-->
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Xuất xứ</label>
-																<select class="form-control"
-																		name="origin" th:field="*{origin.originId}" id="originId">
-																	<option th:each="item : ${originList}"
-																			th:value="${item.originId}" th:text="${item.originName}"
-																			th:selected="${item.originId == product.origin.originId}">
-																		Tên xuất xứ
-																	</option>
-																</select>
-															</div>
-														</div>
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Đơn giá</label>
-																<input th:field="*{price}" id="price" min = 0 type="number" class="form-control" placeholder="Đơn giá">
-															</div>
-														</div>
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Số lượng</label>
-																<input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">
-															</div>
-														</div>
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Giảm giá</label>
-																<input th:field="*{discount}" id="discount" min = 0 type="number" class="form-control" placeholder="Giảm giá">
-															</div>
-														</div>
-														<div class="col-md-6 pr-0">
-															<div class="form-group form-group-default">
-																<label>Ngày thêm</label>
-																<input th:field="*{enteredDate}" id="enteredDate" type="date" class="form-control" placeholder="Ngày thêm">
-															</div>
-														</div>
-														<div class="col-sm-12">
-															<div class="form-group form-group-default">
-																<label>Hình ảnh</label>
-																<input type="file" id="productImage" name="file" class="form-control">
-															</div>
-														</div>
-														<div class="col-sm-12">
-															<div class="form-group form-group-default">
-																<label>Mô tả sản phẩm</label>
-																<textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm"></textarea>
-															</div>
+													<!--origin-->
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Xuất xứ</label>
+															<select class="form-control"
+																	name="origin" th:field="*{origin.originId}" id="originId">
+																<option th:each="item : ${originList}"
+																		th:value="${item.originId}" th:text="${item.originName}"
+																		th:selected="${item.originId == product.origin.originId}">
+																	Tên xuất xứ
+																</option>
+															</select>
 														</div>
 													</div>
-													<div class="modal-footer no-bd">
-														<button type="submit" id="" class="btn btn-primary">Thêm mới</button>
-														<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Đơn giá</label>
+															<input th:field="*{price}" id="price" min = 0 type="number" class="form-control" placeholder="Đơn giá">
+														</div>
 													</div>
-												</form>
-											</div>
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Số lượng</label>
+															<input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">
+														</div>
+													</div>
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Giảm giá</label>
+															<input th:field="*{discount}" id="discount" min = 0 type="number" class="form-control" placeholder="Giảm giá">
+														</div>
+													</div>
+													<div class="col-md-6 pr-0">
+														<div class="form-group form-group-default">
+															<label>Ngày thêm</label>
+															<input th:field="*{enteredDate}" id="enteredDate" type="date" class="form-control" placeholder="Ngày thêm">
+														</div>
+													</div>
+													<div class="col-sm-12">
+														<div class="form-group form-group-default">
+															<label>Hình ảnh</label>
+															<input type="file" id="productImage" name="file" class="form-control">
+														</div>
+													</div>
+													<div class="col-sm-12">
+														<div class="form-group form-group-default">
+															<label>Mô tả sản phẩm</label>
+															<textarea th:field="*{description}" id="description" class="form-control" placeholder="Mô tả sản phẩm"></textarea>
+														</div>
+													</div>
+												</div>
+												<div class="modal-footer no-bd">
+													<button type="submit" id="" class="btn btn-primary">Thêm mới</button>
+													<button type="button" class="btn btn-danger" data-dismiss="modal">Hủy</button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
+							</div>
 
-								<div class="table-responsive">
-									<table id="add-row" class="display table table-striped table-hover" >
-										<thead>
-											<tr>
-												<th>ID</th>
-												<th>Ảnh</th>
-												<th>Tên sản phẩm</th>
-												<th>Thể loại</th>
-												<th>Đơn giá</th>
-												<th>Giảm giá</th>
-												<th>Số lượng</th>
-												<th>Ngày thêm</th>
-												<th>Xuất xứ</th>
-<!-- 												<th style="width: 20%">Mô tả sản phẩm</th> -->
-												<th >Hành động</th>
-											</tr>
-										</thead>
-										
-										<tbody>
-											<tr th:each="item : ${products}">
-												<td>[[${item?.productId}]]</td>
-												<td>
-													<img th:src="@{'/loadImage?imageName='+${item.productImage}}"  alt="product" />
-												</td>
-												<td>[[${item.productName}]]</td>
-												<td>[[${item.category.categoryName}]]</td>
-												<td th:text="${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ'"></td>
-												<td>[[${#numbers.formatDecimal(item?.discount, 1, 'DEFAULT', 0, 'DEFAULT')}+' %']]</td>
-												<td>[[${item.quantity}]]</td>
-												<td>[[${item.enteredDate}]]</td>
-												<td>[[${item.origin.originName}]]</td>
-<!-- 												<td>[[${item.description}]]</td> -->
-												<td>
-													<div class="form-button-action">
-														<a th:href="@{/admin/editProduct/{productId}(productId=${item.productId})}"
-															type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
-															<i class="fa fa-edit"></i>
-														</a>
-														<button th:data-id="${item.productId}" th:data-name="${item.productName}"
-																onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
-																type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa">
-															<i class="fa fa-times"></i>
-														</button>
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-									
-									<script>
+							<div class="table-responsive">
+								<table id="add-row" class="display table table-striped table-hover" >
+									<thead>
+									<tr>
+										<th>ID</th>
+										<th>Ảnh</th>
+										<th>Tên sản phẩm</th>
+										<th>Thể loại</th>
+										<th>Đơn giá</th>
+										<th>Giảm giá</th>
+										<th>Số lượng</th>
+										<th>Ngày thêm</th>
+										<th>Xuất xứ</th>
+										<!-- <th style="width: 20%">Mô tả sản phẩm</th> -->
+										<th>Tình trạng</th>
+									</tr>
+									</thead>
+
+									<tbody>
+									<tr th:each="item : ${products}">
+										<td>[[${item?.productId}]]</td>
+										<td>
+											<img th:src="@{'/loadImage?imageName='+${item.productImage}}"  alt="product" style="width: 60px; height: 60px;"/>
+										</td>
+										<td>[[${item.productName}]]</td>
+										<td>[[${item.category.categoryName}]]</td>
+										<td th:text="${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ'"></td>
+										<td>[[${#numbers.formatDecimal(item?.discount, 1, 'DEFAULT', 0, 'DEFAULT')}+' %']]</td>
+										<td>[[${item.quantity}]]</td>
+										<td>[[${item.enteredDate}]]</td>
+										<td>[[${item.origin.originName}]]</td>
+										<!-- 												<td>[[${item.description}]]</td> -->
+										<td>
+											<div class="form-button-action">
+												<a th:href="@{/admin/editProduct/{productId}(productId=${item.productId})}"
+												   type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Chỉnh sửa">
+													<i class="fa fa-edit"></i>
+												</a>
+												<button th:data-id="${item.productId}" th:data-name="${item.productName}"
+														onclick="showConfigModalDialog(this.getAttribute('data-id'), this.getAttribute('data-name'))"
+														type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Xóa">
+													<i class="fa fa-times"></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+									</tbody>
+								</table>
+
+								<script>
 									function showConfigModalDialog(id, name) {
 										$('#name').text(name);
 										$('#yesOption').attr('href', '/admin/deleteProduct/'+id);
 										$('#configmationId').modal('show');
 									}
-									</script>
-									
-									<!-- Modal -->
-									<div class="modal" tabindex="-1" role="dialog" id="configmationId">
-										<div class="modal-dialog" role="document">
-											<div class="modal-content">
-												<div class="modal-header">
-													<h5 class="modal-title" style="color: black">Xác nhận</h5>
-													<button type="button" class="close" data-dismiss="modal"
+								</script>
+
+								<!-- Modal -->
+								<div class="modal" tabindex="-1" role="dialog" id="configmationId">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" style="color: black">Xác nhận</h5>
+												<button type="button" class="close" data-dismiss="modal"
 														aria-label="Close">
-														<span aria-hidden="true">&times;</span>
-													</button>
-												</div>
-												<div class="modal-body">
-													<p style="color: black">Bạn muốn xóa sản phẩm này không?</p>
-												</div>
-												<div class="modal-footer">
-													<a id="yesOption" type="button" class="btn btn-primary">Có</a>
-													<button type="button" class="btn btn-danger"
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<p style="color: black">Bạn muốn xóa sản phẩm này không?</p>
+											</div>
+											<div class="modal-footer">
+												<a id="yesOption" type="button" class="btn btn-primary">Có</a>
+												<button type="button" class="btn btn-danger"
 														data-dismiss="modal">Không</button>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -258,6 +257,7 @@
 					</div>
 				</div>
 			</div>
+		</div>
 		<footer class="footer">
 			<div class="container-fluid">
 				<nav class="pull-left">
@@ -281,75 +281,75 @@
 				</nav>
 				<div class="copyright ml-auto">
 					2024, made with <i class="fa fa-heart heart text-danger"></i> by <a href="javascript:void(0);">Harvert ViNa</a>
-				</div>				
+				</div>
 			</div>
 		</footer>
 	</div>
-		
-	</div>
-	<!--   Core JS Files   -->
-	<script src="/assets/js/core/jquery.3.2.1.min.js"></script>
-	<script src="/assets/js/core/popper.min.js"></script>
-	<script src="/assets/js/core/bootstrap.min.js"></script>
-	<!-- jQuery UI -->
-	<script src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-	<script src="/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-	
-	<!-- jQuery Scrollbar -->
-	<script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-	<!-- Datatables -->
-	<script src="/assets/js/plugin/datatables/datatables.min.js"></script>
-	<!-- Atlantis JS -->
-	<script src="/assets/js/atlantis.min.js"></script>
-	<!-- Atlantis DEMO methods, don't include it in your project! -->
-	<script src="/assets/js/setting-demo2.js"></script>
-	<script >
-		$(document).ready(function() {
-			$('#basic-datatables').DataTable({
-			});
 
-			$('#multi-filter-select').DataTable( {
-				"pageLength": 5,
-				initComplete: function () {
-					this.api().columns().every( function () {
-						var column = this;
-						var select = $('<select class="form-control"><option value=""></option></select>')
-						.appendTo( $(column.footer()).empty() )
-						.on( 'change', function () {
-							var val = $.fn.dataTable.util.escapeRegex(
-								$(this).val()
-								);
+</div>
+<!--   Core JS Files   -->
+<script src="/assets/js/core/jquery.3.2.1.min.js"></script>
+<script src="/assets/js/core/popper.min.js"></script>
+<script src="/assets/js/core/bootstrap.min.js"></script>
+<!-- jQuery UI -->
+<script src="/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+<script src="/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
-							column
-							.search( val ? '^'+val+'$' : '', true, false )
-							.draw();
-						} );
+<!-- jQuery Scrollbar -->
+<script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+<!-- Datatables -->
+<script src="/assets/js/plugin/datatables/datatables.min.js"></script>
+<!-- Atlantis JS -->
+<script src="/assets/js/atlantis.min.js"></script>
+<!-- Atlantis DEMO methods, don't include it in your project! -->
+<script src="/assets/js/setting-demo2.js"></script>
+<script >
+	$(document).ready(function() {
+        $('#basic-datatables').DataTable({
+        });
 
-						column.data().unique().sort().each( function ( d, j ) {
-							select.append( '<option value="'+d+'">'+d+'</option>' )
-						} );
-					} );
-				}
-			});
+        $('#multi-filter-select').DataTable( {
+            "pageLength": 5,
+            initComplete: function () {
+                this.api().columns().every( function () {
+                    var column = this;
+                    var select = $('<select class="form-control"><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                            );
 
-			// Add Row
-			$('#add-row').DataTable({
-				"pageLength": 5,
-			});
+                        column
+                        .search( val ? '^'+val+'$' : '', true, false )
+                        .draw();
+                    } );
 
-			var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+                    column.data().unique().sort().each( function ( d, j ) {
+                        select.append( '<option value="'+d+'">'+d+'</option>' )
+                    } );
+                } );
+            }
+        });
 
-			/* $('#addRowButton').click(function() {
-				$('#add-row').dataTable().fnAddData([
-					$("#addName").val(),
-					$("#addPosition").val(),
-					$("#addOffice").val(),
-					action
-					]);
-				$('#addRowModal').modal('hide');
+        // Add Row
+        $('#add-row').DataTable({
+            "pageLength": 5,
+        });
 
-			}); */
-		});
-	</script>
+        var action = '<td> <div class="form-button-action"> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+
+        /* $('#addRowButton').click(function() {
+            $('#add-row').dataTable().fnAddData([
+                $("#addName").val(),
+                $("#addPosition").val(),
+                $("#addOffice").val(),
+                action
+                ]);
+            $('#addRowModal').modal('hide');
+
+        }); */
+    });
+</script>
 </body>
 </html>

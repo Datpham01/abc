@@ -133,7 +133,7 @@
                         <div class="product-card" style="width: 230px; height: 360px;">
                             <div class="product-media">
                                 <div class="product-label">
-                                    <label class="label-text new">mới vế</label>
+                                    <label class="label-text new">mới về</label>
                                     <label class="label-text sale">- [[${item.discount + '%'}]]</label>
                                 </div>
                                 <button class="product-wish wish">
@@ -200,16 +200,39 @@
                                     <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
                                 </h6>
 
-                                <th:block th:if="${item.quantity !=  0}">
-                                    <a class="product-add1" title="Thêm giỏ hàng"
+<!--                                <th:block th:if="${item.quantity !=  0}">-->
+<!--                                    <a class="product-add1" title="Thêm giỏ hàng"-->
+<!--                                       th:href="@{/addToCart(productId=${item.productId})}">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+
+<!--                                <th:block th:if="${item.quantity ==  0}">-->
+<!--                                    <a class="product-add2">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+                                <th:block th:if="${user.email != null}">
+                                    <a th:if="${item.quantity !=  0}"
+                                       class="product-add1"
+                                       title="Thêm giỏ hàng"
                                        th:href="@{/addToCart(productId=${item.productId})}">
                                         <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
-                                </th:block>
+                                    <!--                                </th:block>-->
 
-                                <th:block th:if="${item.quantity ==  0}">
-                                    <a class="product-add2">
+
+                                    <!--                                <th:block >-->
+                                    <a th:if="${item.quantity ==  0}"
+                                       class="product-add2">
                                         <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>
+                                    </a>
+                                </th:block>
+                                <th:block href="/login" th:if="${user.email == null}">
+                                    <a
+                                            title="Đăng nhập để thêm vào giỏ hàng"
+                                            th:href="@{/login}">
+                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
                                 </th:block>
 
@@ -324,16 +347,42 @@
                                     <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
                                 </h6>
 
-                                <th:block th:if="${item.quantity !=  0}">
-                                    <a class="product-add1" title="Thêm giỏ hàng"
+<!--                                <th:block th:if="${item.quantity !=  0}">-->
+<!--                                    <a class="product-add1" title="Thêm giỏ hàng"-->
+<!--                                       th:href="@{/addToCart(productId=${item.productId})}">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+
+<!--                                <th:block th:if="${item.quantity ==  0}">-->
+<!--                                    <a class="product-add2">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+
+
+                                <!--them vao gio hang-->
+                                <th:block th:if="${user.email != null}">
+                                    <a th:if="${item.quantity !=  0}"
+                                       class="product-add1"
+                                       title="Thêm giỏ hàng"
                                        th:href="@{/addToCart(productId=${item.productId})}">
                                         <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
-                                </th:block>
+                                    <!--                                </th:block>-->
 
-                                <th:block th:if="${item.quantity ==  0}">
-                                    <a class="product-add2">
+
+                                    <!--                                <th:block >-->
+                                    <a th:if="${item.quantity ==  0}"
+                                       class="product-add2">
                                         <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>
+                                    </a>
+                                </th:block>
+                                <th:block href="/login" th:if="${user.email == null}">
+                                    <a
+                                            title="Đăng nhập để thêm vào giỏ hàng"
+                                            th:href="@{/login}">
+                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
                                 </th:block>
 
@@ -465,16 +514,40 @@
                                     <span>[[${#numbers.formatDecimal(item.price - (item.price * item.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
                                 </h6>
 
-                                <th:block th:if="${item.quantity !=  0}">
-                                    <a class="product-add1" title="Thêm giỏ hàng"
+<!--                                <th:block th:if="${item.quantity !=  0}">-->
+<!--                                    <a class="product-add1" title="Thêm giỏ hàng"-->
+<!--                                       th:href="@{/addToCart(productId=${item.productId})}">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+
+<!--                                <th:block th:if="${item.quantity ==  0}">-->
+<!--                                    <a class="product-add2">-->
+<!--                                        <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>-->
+<!--                                    </a>-->
+<!--                                </th:block>-->
+
+                                <th:block th:if="${user.email != null}">
+                                    <a th:if="${item.quantity !=  0}"
+                                       class="product-add1"
+                                       title="Thêm giỏ hàng"
                                        th:href="@{/addToCart(productId=${item.productId})}">
                                         <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
-                                </th:block>
+                                    <!--                                </th:block>-->
 
-                                <th:block th:if="${item.quantity ==  0}">
-                                    <a class="product-add2">
+
+                                    <!--                                <th:block >-->
+                                    <a th:if="${item.quantity ==  0}"
+                                       class="product-add2">
                                         <i class="fas fa-shopping-basket"></i><span>Hết hàng</span>
+                                    </a>
+                                </th:block>
+                                <th:block href="/login" th:if="${user.email == null}">
+                                    <a
+                                            title="Đăng nhập để thêm vào giỏ hàng"
+                                            th:href="@{/login}">
+                                        <i class="fas fa-shopping-basket"></i><span>Thêm giỏ hàng</span>
                                     </a>
                                 </th:block>
 

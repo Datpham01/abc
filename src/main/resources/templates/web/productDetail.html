@@ -108,7 +108,8 @@
                         <del>[[${#numbers.formatDecimal(product.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]</del>
                         <span>[[${#numbers.formatDecimal(product.price - (product.price * product.discount/100), 1, 'DEFAULT', 0, 'DEFAULT')}+' đ']]<small>/kg</small></span>
                     </h3>
-                    <p class="details-desc" >
+                    <p class="details-desc"
+                       style="border: none; width: 100%; height: auto; white-space: pre-wrap; ">
                         [[${product.description}]]
                     </p>
                     <div class="details-list-group">
@@ -148,6 +149,7 @@
                         </div>
                     </th:block>
 
+
                     <th:block th:if="${product.quantity == 0}">
                         <div class="details-add-group">
                             <a class="product-add1" style="background-color: #cacaca">
@@ -164,7 +166,7 @@
 
                     <th:block th:if="${user.email != null}">
                         <div class="details-action-group">
-                            <a "details-wish" th:if="${product.favorite} == false"
+                            <a class="details-wish" th:if="${product.favorite} == false"
                             title="Yêu thích"
                             th:href="@{/doFavorite(id=${product.productId})}" >
                             <i class="icofont-heart"></i>
