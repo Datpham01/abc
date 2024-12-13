@@ -1,7 +1,9 @@
 package vn.fs.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import javax.mail.MessagingException;
@@ -30,6 +32,7 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vn.fs.commom.CommomDataService;
 import vn.fs.config.PaypalPaymentIntent;
 import vn.fs.config.PaypalPaymentMethod;
@@ -38,9 +41,11 @@ import vn.fs.entities.CartItem;
 import vn.fs.entities.Order;
 import vn.fs.entities.OrderDetail;
 import vn.fs.entities.Product;
+import vn.fs.entities.ProductInventory;
 import vn.fs.entities.User;
 import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.OrderRepository;
+import vn.fs.repository.ProductInventoryRepository;
 import vn.fs.service.PaypalService;
 import vn.fs.service.ShoppingCartService;
 import vn.fs.util.Utils;
@@ -49,32 +54,35 @@ import vn.fs.util.Utils;
 @Controller
 public class CartController extends CommomController {
 
-	@Autowired
-	HttpSession session;
+    @Autowired
+    HttpSession session;
 
-	@Autowired
-	CommomDataService commomDataService;
+    @Autowired
+    CommomDataService commomDataService;
 
-	@Autowired
-	ShoppingCartService shoppingCartService;
+    @Autowired
+    ShoppingCartService shoppingCartService;
 
-	@Autowired
-	private PaypalService paypalService;
+    @Autowired
+    private PaypalService paypalService;
 
-	@Autowired
-	OrderRepository orderRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
-	@Autowired
-	OrderDetailRepository orderDetailRepository;
+    @Autowired
+    OrderDetailRepository orderDetailRepository;
 
-	@Autowired
-	VNPAYService vnpayService;
+    @Autowired
+    ProductInventoryRepository productInventoryRepository;
 
-	public Order orderFinal = new Order();
+    @Autowired
+    VNPAYService vnpayService;
 
-	public static final String URL_PAYPAL_SUCCESS = "pay/success";
-	public static final String URL_PAYPAL_CANCEL = "pay/cancel";
-	private Logger log = LoggerFactory.getLogger(getClass());
+    public Order orderFinal = new Order();
+
+    public static final String URL_PAYPAL_SUCCESS = "pay/success";
+    public static final String URL_PAYPAL_CANCEL = "pay/cancel";
+    private Logger log = LoggerFactory.getLogger(getClass());
 
 //	@GetMapping(value = "/shoppingCart_checkout")
 //	public String shoppingCart(Model model) {
@@ -94,268 +102,290 @@ public class CartController extends CommomController {
 //		return "web/shoppingCart_checkout";
 //	}
 
-	// add cartItem
-	@GetMapping(value = "/addToCart")
-	public String add(@RequestParam("productId") Long productId, HttpServletRequest request, Model model) {
+    // add cartItem
+    @GetMapping(value = "/addToCart")
+    public String add(@RequestParam("productId") Long productId, HttpServletRequest request, Model model) {
 
-		Product product = productRepository.findById(productId).orElse(null);
+        Product product = productRepository.findById(productId).orElse(null);
 
-		session = request.getSession();
-		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
-		if (product != null) {
-			CartItem item = new CartItem();
-			BeanUtils.copyProperties(product, item);
-			item.setQuantity(1);
-			item.setProduct(product);
-			item.setId(productId);
-			shoppingCartService.add(item);
-		}
-		session.setAttribute("cartItems", cartItems);
-		model.addAttribute("totalCartItems", shoppingCartService.getCount());
+        session = request.getSession();
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        if (product != null) {
+            CartItem item = new CartItem();
+            BeanUtils.copyProperties(product, item);
+            item.setQuantity(1);
+            item.setProduct(product);
+            item.setId(productId);
+            shoppingCartService.add(item);
+        }
+        session.setAttribute("cartItems", cartItems);
+        model.addAttribute("totalCartItems", shoppingCartService.getCount());
 
-		return "redirect:/products";
-	}
+        return "redirect:/products";
+    }
 
-	// add cartItem
-	@GetMapping(value = "/addToCartProductDetail")
-	public String addToCartProductDetail(@RequestParam("id") Long id, HttpServletRequest request, Model model) {
+    // add cartItem
+    @GetMapping(value = "/addToCartProductDetail")
+    public String addToCartProductDetail(@RequestParam("id") Long id, HttpServletRequest request, Model model) {
 
-		Product product = productRepository.findById(id).orElse(null);
+        Product product = productRepository.findById(id).orElse(null);
 
-		session = request.getSession();
-		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
-		if (product != null) {
-			CartItem item = new CartItem();
-			BeanUtils.copyProperties(product, item);
-			item.setQuantity(1);
-			item.setProduct(product);
-			item.setId(id);
-			shoppingCartService.add(item);
-		}
-		session.setAttribute("cartItems", cartItems);
-		model.addAttribute("totalCartItems", shoppingCartService.getCount());
+        session = request.getSession();
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        if (product != null) {
+            CartItem item = new CartItem();
+            BeanUtils.copyProperties(product, item);
+            item.setQuantity(1);
+            item.setProduct(product);
+            item.setId(id);
+            shoppingCartService.add(item);
+        }
+        session.setAttribute("cartItems", cartItems);
+        model.addAttribute("totalCartItems", shoppingCartService.getCount());
 
-		return "redirect:/productDetail?id=" + id;
-	}
-
-	
-	@GetMapping(value = "/remove/{id}")
-	public String remove(@PathVariable("id") Long id, HttpServletRequest request, Model model) {
-	    Collection<CartItem> cartItems = shoppingCartService.getCartItems();
-	    session = request.getSession();
-	    
-	    // Tìm và xóa CartItem từ id
-	    Optional<CartItem> optionalCartItem = cartItems.stream()
-	                                                   .filter(item -> item.getId().equals(id))
-	                                                   .findFirst();
-	    if (optionalCartItem.isPresent()) {
-	        CartItem itemToRemove = optionalCartItem.get();
-	        
-	        // Xóa CartItem khỏi giỏ hàng
-	        shoppingCartService.remove(itemToRemove);
-	        
-	        // Cập nhật danh sách cartItems trong session
-	        cartItems.remove(itemToRemove);
-	    }
-	    
-	    model.addAttribute("totalCartItems", shoppingCartService.getCount());
-	    return "redirect:/checkout";
-	}
+        return "redirect:/productDetail?id=" + id;
+    }
 
 
-	// show check out
-	@GetMapping(value = "/checkout")
-	public String checkOut(Model model, User user) {
+    @GetMapping(value = "/remove/{id}")
+    public String remove(@PathVariable("id") Long id, HttpServletRequest request, Model model) {
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        session = request.getSession();
 
-		Order order = new Order();
-		model.addAttribute("order", order);
+        // Tìm và xóa CartItem từ id
+        Optional<CartItem> optionalCartItem = cartItems.stream()
+                .filter(item -> item.getId().equals(id))
+                .findFirst();
+        if (optionalCartItem.isPresent()) {
+            CartItem itemToRemove = optionalCartItem.get();
 
-		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
-		model.addAttribute("cartItems", cartItems);
-		model.addAttribute("total", shoppingCartService.getAmount());
-		model.addAttribute("NoOfItems", shoppingCartService.getCount());
-		double totalPrice = 0;
-		for (CartItem cartItem : cartItems) {
-			double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
-			totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
-		}
+            // Xóa CartItem khỏi giỏ hàng
+            shoppingCartService.remove(itemToRemove);
 
-		model.addAttribute("totalPrice", totalPrice);
-		model.addAttribute("totalCartItems", shoppingCartService.getCount());
-		commomDataService.commonData(model, user);
+            // Cập nhật danh sách cartItems trong session
+            cartItems.remove(itemToRemove);
+        }
 
-		return "web/shoppingCart_checkout";
-	}
+        model.addAttribute("totalCartItems", shoppingCartService.getCount());
+        return "redirect:/checkout";
+    }
 
-	// submit checkout
-	@PostMapping(value = "/checkout")
-	@Transactional
-	public String checkedOut(Model model, Order order, HttpServletRequest request, User user)
-			throws MessagingException {
 
-		String checkOut = request.getParameter("checkOut");
+    // show check out
+    @GetMapping(value = "/checkout")
+    public String checkOut(Model model, User user) {
 
-		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        Order order = new Order();
+        model.addAttribute("order", order);
 
-		double totalPrice = 0;
-		for (CartItem cartItem : cartItems) {
-			double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
-			totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
-		}
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("total", shoppingCartService.getAmount());
+        model.addAttribute("NoOfItems", shoppingCartService.getCount());
+        double totalPrice = 0;
+        for (CartItem cartItem : cartItems) {
+            double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
+            totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
+        }
 
-		BeanUtils.copyProperties(order, orderFinal);
-		if (StringUtils.equals(checkOut, "paypal")) {
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalCartItems", shoppingCartService.getCount());
+        commomDataService.commonData(model, user);
 
-			String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
-			String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
-			try {
-				totalPrice = totalPrice / 25456;
-				Payment payment = paypalService.createPayment(totalPrice, "USD", PaypalPaymentMethod.paypal,
-						PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
-				for (Links links : payment.getLinks()) {
-					if (links.getRel().equals("approval_url")) {
-						return "redirect:" + links.getHref();
-					}
-				}
-			} catch (PayPalRESTException e) {
-				log.error(e.getMessage());
-			}
-		} else if(StringUtils.equals(checkOut,"vnpay")) {
-			Date date = new Date();
-			order.setStatus(0);
-			order.setOrderDate(date);
-			order.setUser(user);
-			order.setAmount(totalPrice);
-			order = orderRepository.save(order);
+        return "web/shoppingCart_checkout";
+    }
 
-			for (CartItem cartItem : cartItems) {
-				OrderDetail orderDetail = new OrderDetail();
-				orderDetail.setQuantity(cartItem.getQuantity());
-				orderDetail.setOrder(order);
-				orderDetail.setProduct(cartItem.getProduct());
-				double unitPrice = cartItem.getProduct().getPrice();
-				orderDetail.setPrice(unitPrice);
-				orderDetailRepository.save(orderDetail);
-			}
+    //check quantity before buy
+    private List<CartItem> checkQuantity(Collection<CartItem> cartItems) {
+        List<CartItem> outOfStockItems = new ArrayList<>();
 
-			String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
-			int amount = (int) totalPrice;
- 			String vnpayUrl = vnpayService.createOrder(request,amount, order.getOrderId().toString(), baseUrl);
-			return "redirect:" + vnpayUrl;
-		}
+        for (CartItem cartItem : cartItems) {
+            ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(cartItem.getProduct().getProductId());
+            if (productInventory == null || cartItem.getProduct().getQuantity() > productInventory.getQuantity()) {
+                outOfStockItems.add(cartItem);
+            }
+        }
 
-		session = request.getSession();
-		Date date = new Date();
-		order.setStatus(0);
-		order.setOrderDate(date);
-		order.setUser(user);
-		order.getOrderId();
-		order.setAmount(totalPrice);
+        return outOfStockItems;
+    }
 
-		orderRepository.save(order);
+    // submit checkout
+    @PostMapping(value = "/checkout")
+    @Transactional
+    public String checkedOut(Model model, Order order, HttpServletRequest request, User user, RedirectAttributes redirectAttributes)
+            throws MessagingException {
 
-		for (CartItem cartItem : cartItems) {
-			OrderDetail orderDetail = new OrderDetail();
-			orderDetail.setQuantity(cartItem.getQuantity());
-			orderDetail.setOrder(order);
-			orderDetail.setProduct(cartItem.getProduct());
-			double unitPrice = cartItem.getProduct().getPrice();
-			orderDetail.setPrice(unitPrice);
-			orderDetailRepository.save(orderDetail);
-		}
+        String checkOut = request.getParameter("checkOut");
 
-		// sendMail
-		commomDataService.sendSimpleEmail(user.getEmail(), "Harvert ViNa - Xác Nhận Đơn hàng", "xác nhận", cartItems,
-				totalPrice, order);
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
 
-		shoppingCartService.clear();
-		session.removeAttribute("cartItems");
-		model.addAttribute("orderId", order.getOrderId());
+        List<CartItem> outOfStockItems = checkQuantity(cartItems);
+        if (!outOfStockItems.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Một số sản phẩm không còn đủ hàng trong kho.");
+            model.addAttribute("order", order);
+            return "redirect:/checkout";
+        }
 
-		return "redirect:/checkout_success";
-	}
+        double totalPrice = 0;
+        for (CartItem cartItem : cartItems) {
+            double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
+            totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
+        }
 
-	// paypal
-	@GetMapping(URL_PAYPAL_SUCCESS)
-	public String successPay(@RequestParam("" + "" + "") String paymentId, @RequestParam("PayerID") String payerId,
-			HttpServletRequest request, User user, Model model) throws MessagingException {
-		Collection<CartItem> cartItems = shoppingCartService.getCartItems();
-		model.addAttribute("cartItems", cartItems);
-		model.addAttribute("total", shoppingCartService.getAmount());
+        BeanUtils.copyProperties(order, orderFinal);
+        if (StringUtils.equals(checkOut, "paypal")) {
 
-		double totalPrice = 0;
-		for (CartItem cartItem : cartItems) {
-			double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
-			totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
-		}
-		model.addAttribute("totalPrice", totalPrice);
-		model.addAttribute("totalCartItems", shoppingCartService.getCount());
+            String cancelUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_CANCEL;
+            String successUrl = Utils.getBaseURL(request) + "/" + URL_PAYPAL_SUCCESS;
+            try {
+                totalPrice = totalPrice / 25456;
+                Payment payment = paypalService.createPayment(totalPrice, "USD", PaypalPaymentMethod.paypal,
+                        PaypalPaymentIntent.sale, "payment description", cancelUrl, successUrl);
+                for (Links links : payment.getLinks()) {
+                    if (links.getRel().equals("approval_url")) {
+                        return "redirect:" + links.getHref();
+                    }
+                }
+            } catch (PayPalRESTException e) {
+                log.error(e.getMessage());
+            }
+        } else if (StringUtils.equals(checkOut, "vnpay")) {
+            Date date = new Date();
+            order.setStatus(0);
+            order.setOrderDate(date);
+            order.setUser(user);
+            order.setAmount(totalPrice);
+            order = orderRepository.save(order);
 
-		try {
-			Payment payment = paypalService.executePayment(paymentId, payerId);
-			if (payment.getState().equals("approved")) {
+            for (CartItem cartItem : cartItems) {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.setQuantity(cartItem.getQuantity());
+                orderDetail.setOrder(order);
+                orderDetail.setProduct(cartItem.getProduct());
+                double unitPrice = cartItem.getProduct().getPrice();
+                orderDetail.setPrice(unitPrice);
+                orderDetailRepository.save(orderDetail);
+            }
 
-				session = request.getSession();
-				Date date = new Date();
-				orderFinal.setOrderDate(date);
-				orderFinal.setStatus(0);
-				orderFinal.getOrderId();
-				orderFinal.setUser(user);
-				orderFinal.setAmount(totalPrice);
-				orderRepository.save(orderFinal);
+            String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
+            int amount = (int) totalPrice;
+            String vnpayUrl = vnpayService.createOrder(request, amount, order.getOrderId().toString(), baseUrl);
+            return "redirect:" + vnpayUrl;
+        }
 
-				for (CartItem cartItem : cartItems) {
-					OrderDetail orderDetail = new OrderDetail();
-					orderDetail.setQuantity(cartItem.getQuantity());
-					orderDetail.setOrder(orderFinal);
-					orderDetail.setProduct(cartItem.getProduct());
-					double unitPrice = cartItem.getProduct().getPrice();
-					orderDetail.setPrice(unitPrice);
-					orderDetailRepository.save(orderDetail);
-				}
+        session = request.getSession();
+        Date date = new Date();
+        order.setStatus(0);
+        order.setOrderDate(date);
+        order.setUser(user);
+        order.getOrderId();
+        order.setAmount(totalPrice);
 
-				// sendMail
-				commomDataService.sendSimpleEmail(user.getEmail(), "Harvert ViNa-Xác Nhận Đơn hàng", "xác nhận", cartItems,
-						totalPrice, orderFinal);
+        orderRepository.save(order);
 
-				shoppingCartService.clear();
-				session.removeAttribute("cartItems");
-				model.addAttribute("orderId", orderFinal.getOrderId());
-				orderFinal = new Order();
-				return "redirect:/checkout_paypal_success";
-			}
-		} catch (PayPalRESTException e) {
-			log.error(e.getMessage());
-		}
-		return "redirect:/";
-	}
+        for (CartItem cartItem : cartItems) {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setQuantity(cartItem.getQuantity());
+            orderDetail.setOrder(order);
+            orderDetail.setProduct(cartItem.getProduct());
+            double unitPrice = cartItem.getProduct().getPrice();
+            orderDetail.setPrice(unitPrice);
+            orderDetailRepository.save(orderDetail);
+        }
 
-	// done checkout ship cod
-	@GetMapping(value = "/checkout_success")
-	public String checkoutSuccess(Model model, User user) {
-		commomDataService.commonData(model, user);
+        // sendMail
+        commomDataService.sendSimpleEmail(user.getEmail(), "Harvert ViNa - Xác Nhận Đơn hàng", "xác nhận", cartItems,
+                totalPrice, order);
 
-		return "web/checkout_success";
+        shoppingCartService.clear();
+        session.removeAttribute("cartItems");
+        model.addAttribute("orderId", order.getOrderId());
 
-	}
+        return "redirect:/checkout_success";
+    }
 
-	// done checkout paypal
-	@GetMapping(value = "/checkout_paypal_success")
-	public String paypalSuccess(Model model, User user) {
-		commomDataService.commonData(model, user);
+    // paypal
+    @GetMapping(URL_PAYPAL_SUCCESS)
+    public String successPay(@RequestParam("" + "" + "") String paymentId, @RequestParam("PayerID") String payerId,
+                             HttpServletRequest request, User user, Model model) throws MessagingException {
+        Collection<CartItem> cartItems = shoppingCartService.getCartItems();
+        model.addAttribute("cartItems", cartItems);
+        model.addAttribute("total", shoppingCartService.getAmount());
 
-		return "web/checkout_paypal_success";
+        double totalPrice = 0;
+        for (CartItem cartItem : cartItems) {
+            double price = cartItem.getQuantity() * cartItem.getProduct().getPrice();
+            totalPrice += price - (price * cartItem.getProduct().getDiscount() / 100);
+        }
+        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalCartItems", shoppingCartService.getCount());
 
-	}
-	
+        try {
+            Payment payment = paypalService.executePayment(paymentId, payerId);
+            if (payment.getState().equals("approved")) {
 
-	@PutMapping(value = "/updateQuantity", params = { "productId", "quantity" })
-	public String updateQ(ModelMap model, HttpSession session, @RequestParam("productId") Long id,
-			@RequestParam("quantity") int qty) {
-		shoppingCartService.updateQuantity(id, qty);;
+                session = request.getSession();
+                Date date = new Date();
+                orderFinal.setOrderDate(date);
+                orderFinal.setStatus(0);
+                orderFinal.getOrderId();
+                orderFinal.setUser(user);
+                orderFinal.setAmount(totalPrice);
+                orderRepository.save(orderFinal);
 
-		 return "web/shoppingCart_checkout";
-	}
+                for (CartItem cartItem : cartItems) {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.setQuantity(cartItem.getQuantity());
+                    orderDetail.setOrder(orderFinal);
+                    orderDetail.setProduct(cartItem.getProduct());
+                    double unitPrice = cartItem.getProduct().getPrice();
+                    orderDetail.setPrice(unitPrice);
+                    orderDetailRepository.save(orderDetail);
+                }
+
+                // sendMail
+                commomDataService.sendSimpleEmail(user.getEmail(), "Harvert ViNa-Xác Nhận Đơn hàng", "xác nhận", cartItems,
+                        totalPrice, orderFinal);
+
+                shoppingCartService.clear();
+                session.removeAttribute("cartItems");
+                model.addAttribute("orderId", orderFinal.getOrderId());
+                orderFinal = new Order();
+                return "redirect:/checkout_paypal_success";
+            }
+        } catch (PayPalRESTException e) {
+            log.error(e.getMessage());
+        }
+        return "redirect:/";
+    }
+
+    // done checkout ship cod
+    @GetMapping(value = "/checkout_success")
+    public String checkoutSuccess(Model model, User user) {
+        commomDataService.commonData(model, user);
+
+        return "web/checkout_success";
+
+    }
+
+    // done checkout paypal
+    @GetMapping(value = "/checkout_paypal_success")
+    public String paypalSuccess(Model model, User user) {
+        commomDataService.commonData(model, user);
+
+        return "web/checkout_paypal_success";
+
+    }
+
+
+    @PutMapping(value = "/updateQuantity", params = {"productId", "quantity"})
+    public String updateQ(ModelMap model, HttpSession session, @RequestParam("productId") Long id,
+                          @RequestParam("quantity") int qty) {
+        shoppingCartService.updateQuantity(id, qty);
+        ;
+
+        return "web/shoppingCart_checkout";
+    }
 
 
 }

@@ -10,4 +10,5 @@ import java.util.List;
 public interface ProductInventoryRepository extends JpaRepository<ProductInventory, Integer> {
     List<ProductInventory> findProductInventoryByInventory_InventoryId(Integer inventoryId);
     boolean existsByProduct_ProductId(Long productId);
+    ProductInventory findProductInventoryByProduct_ProductId(Long productId);
 }

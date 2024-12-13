@@ -84,6 +84,11 @@
                         <h4 style="color: #119744">Hãy mua sắm đi nào!</h4>
                         <a th:href="@{/products}" style="text-decoration: underline;">Click tại đây!</a>
                     </div>
+
+                    <div th:if="${errorMessage}" class="alert alert-danger" style="padding: 10px 0 10px 0">
+                        <p th:text="${errorMessage}"></p>
+                    </div>
+
                     <div class="account-content">
                         <div class="table-scroll">
                             <table class="table-list" th:if="${totalCartItems!=0}">
