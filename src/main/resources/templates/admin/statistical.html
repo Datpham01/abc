@@ -79,10 +79,9 @@
 												<th>STT</th>
 												<th>Nhóm</th>
 												<th>Số lượng bán ra</th>
+												<th>Giá gốc</th>
+												<th>Giá bán</th>
 												<th>Doanh thu</th>
-												<th>Giá trung bình</th>
-												<th>Giá thấp nhất</th>
-												<th>Giá cao nhất</th>
 											</tr>
 										</thead>
 										<tfoot>
@@ -90,12 +89,9 @@
 												<th>#</th>
 												<th>Nhóm</th>
 												<th>Số lượng bán ra</th>
+												<th>Giá gốc</th>
+												<th>Giá bán</th>
 												<th>Doanh thu</th>
-
-												<!--sửa chỗ này: thành cột giá gốc, lợi nhuận( lợi nhuận = giá gốc - giá bán đc)-->
-												<th>Giá trung bình</th>
-												<th>Giá thấp nhất</th>
-												<th>Giá cao nhất</th>
 											</tr>
 										</tfoot>
 										<tbody>
@@ -106,7 +102,6 @@
 												<td>[[${#numbers.formatDecimal(item[2], 1, 'DEFAULT', 0, 'DEFAULT')} + ' đ']]</td>
 												<td>[[${#numbers.formatDecimal(item[3], 1, 'DEFAULT', 0, 'DEFAULT')} + ' đ']]</td>
 												<td>[[${#numbers.formatDecimal(item[4], 1, 'DEFAULT', 0, 'DEFAULT')} + ' đ']]</td>
-												<td>[[${#numbers.formatDecimal(item[5], 1, 'DEFAULT', 0, 'DEFAULT')} + ' đ']]</td>
 											</tr>
 										</tbody>
 									</table>
