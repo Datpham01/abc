@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý bài viết</title>
+    <script src="https://cdn.ckeditor.com/4.21.0/standard/ckeditor.js"></script>
+</head>
+<body>
+<div>
+    <input id="title" type="text" placeholder="Tiêu đề bài viết" />
+    <textarea id="content"></textarea>
+    <button id="savePost">Lưu bài viết</button>
+</div>
+<script>
+    // Tích hợp CKEditor
+    CKEDITOR.replace('content', {
+        extraPlugins: 'uploadimage',
+        filebrowserUploadUrl: '/api/uploads/image', // API upload ảnh
+        filebrowserUploadMethod: 'form',
+    });
+
+    // Lưu bài viết
+    document.getElementById('savePost').addEventListener('click', async () => {
+        const title = document.getElementById('title').value;
+        const content = CKEDITOR.instances.content.getData(); // Lấy nội dung từ CKEditor
+
+        const postData = {
+            title: title,
+            content: content,
+            author: 'Admin',
+        };
+
+        try {
+            const response = await fetch('/api/posts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(postData),
+            });
+
+            if (response.ok) {
+                alert('Bài viết đã được lưu thành công!');
+            } else {
+                alert('Có lỗi xảy ra, vui lòng thử lại!');
+            }
+        } catch (error) {
+            console.error('Error saving post:', error);
+        }
+    });
+</script>
+</body>
+</html>

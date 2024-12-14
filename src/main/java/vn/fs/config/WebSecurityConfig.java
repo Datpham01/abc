@@ -57,9 +57,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Cấu hình phân quyền truy cập cho các trang
         http.authorizeRequests()
+                .antMatchers("/css/**", "/js/**", "/images/**").permitAll()
                 .antMatchers("/admin/users").hasRole("ADMIN") // Chỉ cho phép ADMIN truy cập
                 .antMatchers("/admin/**").hasAnyRole("ADMIN", "EMPLOYEE") // Cho phép ADMIN và EMPLOYEE truy cập
-                .antMatchers("/checkout").hasRole("USER") // Chỉ cho phép USER truy cập
+                .antMatchers("/checkout").hasRole("USER")
+                .antMatchers("/posts/**").permitAll()
                 .antMatchers("/**").permitAll() // Cho phép tất cả truy cập không hạn chế
                 .anyRequest().authenticated() // Bắt buộc xác thực cho mọi yêu cầu khác
                 .and()
@@ -102,49 +104,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/web/notFound"); // Trang lỗi khi truy cập bị từ chối
     }
-
-    //	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//
-//		http.csrf().disable();
-//
-//		// Admin page
-//        http.authorizeRequests().antMatchers("/admin/users").access("hasRole('ROLE_ADMIN')");
-//
-////		http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
-//        http.authorizeRequests().antMatchers("/admin/**").access("hasAnyRole('ROLE_ADMIN','ROLE_EMPLOYEE')");
-//
-//
-//		// If you are not logged in, you will be redirected to the /login page.
-//		http.authorizeRequests().antMatchers("/checkout").access("hasRole('ROLE_USER')");
-//
-//		http.authorizeRequests()
-//			.antMatchers("/**").permitAll()
-//			.anyRequest().authenticated()
-//			.and()
-//		.formLogin()
-//			.loginProcessingUrl("/doLogin")
-//			.loginPage("/login")
-//			.defaultSuccessUrl("/?login_success")
-//			.successHandler(new SuccessHandler()).failureUrl("/login?error=true&accountLocked=true")
-//			.failureUrl("/login?error=true")
-//			.permitAll()
-//			.and()
-//		.logout()
-//			.invalidateHttpSession(true)
-//			.clearAuthentication(true)
-//			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//			.logoutSuccessUrl("/?logout_success")
-//			.permitAll();
-//
-//		 // remember-me
-//		http.rememberMe()
-//			.rememberMeParameter("remember");
-//
-//	    http.exceptionHandling()
-//        .accessDeniedPage("/web/notFound");
-//
-//	}
-
-
 }
