@@ -91,7 +91,7 @@
 												</button>
 											</div>
 											<div class="modal-body">
-												<form th:action="@{/admin/addCategory}" th:object="${category}" method="post">
+												<form th:action="@{/admin/addCategory}" th:object="${category}" method="post" enctype="multipart/form-data">
 													<div class="row">
 														<div class="col-sm-12">
 															<div class="form-group form-group-default">
@@ -99,12 +99,12 @@
 																<input th:field="*{categoryName}" id="categoryName" type="text" class="form-control" placeholder="Tên thể lọai" required="required">
 															</div>
 														</div>
-<!--														<div class="col-sm-12">-->
-<!--															<div class="form-group form-group-default">-->
-<!--																<label>Images</label>-->
-<!--																<input type="file" id="categoryImage" name="file" class="form-control">-->
-<!--															</div>-->
-<!--														</div>-->
+														<div class="col-sm-12">
+															<div class="form-group form-group-default">
+																<label>Images</label>
+																<input type="file" id="categoryImage" name="file" class="form-control">
+															</div>
+														</div>
 													</div>
 													<div class="modal-footer no-bd">
 														<button type="submit" id="" class="btn btn-primary">Thêm</button>
@@ -126,6 +126,7 @@
 												<th>STT</th>
 <!--												<th>Images</th>-->
 												<th>Tên thể loại</th>
+												<th>Ảnh</th>
 												<th style="width: 10%">Tùy chọn</th>
 											</tr>
 										</thead>
@@ -134,16 +135,17 @@
 												<th>STT</th>
 												<!--<th>Images</th>-->
 												<th>Tên thể loại</th>
+												<th>Ảnh</th>
 												<th>Tùy chọn</th>
 											</tr>
 										</tfoot>
 										<tbody>
 											<tr th:each="item : ${categories}">
 												<td>[[${item.categoryId}]]</td>
-<!--												<td>-->
-<!--													<img th:src="@{'/loadImage?imageName='+${item.categoryImage}}" width="60px" alt="..." />-->
-<!--												</td>-->
 												<td>[[${item.categoryName}]]</td>
+												<td>
+													<img th:src="@{'/loadImage?imageName='+${item.categoryImage}}" width="60px" height="80px" alt="..." />
+												</td>
 												<td>
 													<div class="form-button-action">
 														<a th:href="@{/admin/editCategory/{categoryId}(categoryId=${item.categoryId})}"

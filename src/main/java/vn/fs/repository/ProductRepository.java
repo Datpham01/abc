@@ -35,7 +35,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	
 	// count quantity by product
 	@Query(value = "SELECT c.category_id,c.category_name,\r\n"
-			+ "COUNT(*) AS SoLuong\r\n"
+			+ "COUNT(*) AS SoLuong, c.category_image\r\n"
 			+ "FROM products p\r\n"
 			+ "JOIN categories c ON p.category_id = c.category_id\r\n"
 			+ "GROUP BY c.category_name;" , nativeQuery = true)

@@ -108,7 +108,7 @@
         <ul class="suggest-slider slider-arrow">
             <li th:each="item : ${coutnProductByCategory}">
                 <a class="suggest-card" th:href="@{/productByCategory(id=${item[0]})}">
-                    <img src="images/suggest/02.jpg" alt="suggest"/>
+                    <img th:src="@{/loadImage(imageName=${item[3]})}" height="150px" width="240px" alt="suggest"/>
                     <h5>
                         [[${item[1]}]] <span>số lượng : [[${item[2]}]] </span>
                     </h5>

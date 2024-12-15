@@ -1555,7 +1555,7 @@ tbody tr td:last-child {
   background: rgba(17, 151, 68, 0.9);
 }
 .suggest-card img {
-  width: 100%;
+  width: 240px;
   border-radius: 8px;
 }
 .suggest-card h5 {
