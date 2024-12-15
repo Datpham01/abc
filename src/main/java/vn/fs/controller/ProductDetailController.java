@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import vn.fs.commom.CommomDataService;
 import vn.fs.entities.Comment;
 import vn.fs.entities.Product;
+import vn.fs.entities.ProductInventory;
 import vn.fs.entities.User;
 import vn.fs.repository.CommentRepository;
+import vn.fs.repository.ProductInventoryRepository;
 import vn.fs.repository.ProductRepository;
 
 
@@ -31,10 +33,17 @@ public class ProductDetailController extends CommomController{
 	@Autowired
 	CommentRepository commentRepository;
 
+	@Autowired
+	ProductInventoryRepository productInventoryRepository;
+
 	@GetMapping(value = "productDetail")
 	public String productDetail(@RequestParam("id") Long id, Model model, User user) {
 
 		Product product = productRepository.findById(id).orElse(null);
+		ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(id);
+		if(product != null && productInventory != null) {
+			product.setQuantity(productInventory.getQuantity());
+		}
 		model.addAttribute("product", product);
 
 		List<Comment> commentList = commentRepository.findByProduct_ProductId(id).orElse(null);
