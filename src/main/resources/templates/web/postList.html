@@ -4,29 +4,30 @@
         http-equiv="content-type"
         content="text/html;charset=utf-8"/>
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <meta
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="author" content="mironcoder" />
-    <meta name="email" content="mironcoder@gmail.com" />
-    <meta name="profile" content="https://themeforest.net/user/mironcoder" />
-    <meta name="template" content="greeny" />
-    <meta name="title" content="greeny - Ecommerce Food Store HTML Template" />
+    <meta name="author" content="mironcoder"/>
+    <meta name="email" content="mironcoder@gmail.com"/>
+    <meta name="profile" content="https://themeforest.net/user/mironcoder"/>
+    <meta name="template" content="greeny"/>
+    <meta name="title" content="greeny - Ecommerce Food Store HTML Template"/>
     <meta
             name="keywords"
             content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"/>
 
     <title>Harvert ViNa</title>
-    <link rel="icon" href="/images/logo.png" />
-    <link rel="stylesheet" href="fonts/flaticon/flaticon.css" />
-    <link rel="stylesheet" href="fonts/icofont/icofont.min.css" />
-    <link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css" />
-    <link rel="stylesheet" href="vendor/venobox/venobox.min.css" />
-    <link rel="stylesheet" href="vendor/slickslider/slick.min.css" />
-    <link rel="stylesheet" href="vendor/niceselect/nice-select.min.css" />
-    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" href="/images/logo.png"/>
+    <link rel="stylesheet" href="fonts/flaticon/flaticon.css"/>
+    <link rel="stylesheet" href="fonts/icofont/icofont.min.css"/>
+    <link rel="stylesheet" href="fonts/fontawesome/fontawesome.min.css"/>
+    <link rel="stylesheet" href="vendor/venobox/venobox.min.css"/>
+    <link rel="stylesheet" href="vendor/slickslider/slick.min.css"/>
+    <link rel="stylesheet" href="vendor/niceselect/nice-select.min.css"/>
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="css/index.css"/>
     <style>
         .post-container {
             display: flex;
@@ -58,6 +59,8 @@
         a:hover {
             text-decoration: underline;
         }
+
+
     </style>
 </head>
 <body>
@@ -73,8 +76,15 @@
 <div class="post-container">
     <ul>
         <li th:each="post : ${posts}" class="post-item">
-            <h3 th:text="${post.title}"></h3>
-            <a th:href="@{/posts-detail/{id}(id=${post.id})}">Xem chi tiết</a>
+            <div style="width: 300px; height: 250px; margin-right: 20px; object-fit: cover;">
+                <img th:src="@{/images/{imageName}(imageName=${randomImage})}" />
+            </div>
+            <div  style="flex: 1; padding-left: 20px;">
+                <h3 th:text="${post.title}"></h3>
+                <a th:href="@{/posts-detail/{id}(id=${post.id})}">Xem chi tiết</a>
+            </div>
+
+
             <hr>
         </li>
     </ul>

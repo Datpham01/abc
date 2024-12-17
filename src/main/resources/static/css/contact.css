@@ -1,3 +1,8 @@
+body {
+    background: var(--white)
+}
+
+
 .contact-form {
     border-radius: 8px;
     padding: 30px 30px;

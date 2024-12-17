@@ -47,8 +47,7 @@
                         <h1>CAM KẾT CHẤT LƯỢNG</h1>
                         <p>Tất cả sản phẩm chúng tôi cung cấp đều trải qua quá trình kiểm tra và đánh giá nghiêm túc.
                             Các nhà cung cấp của chúng tôi thường xuyên được đánh giá lại để đảm bảo tuân thủ các chỉ
-                            dấn
-                            về chất lượng của chúng tôi</p>
+                            dấn về chất lượng của chúng tôi</p>
                         <div class="banner-btn">
                             <a class="btn btn-inline"
                                th:href="@{/products}">
@@ -65,7 +64,7 @@
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <div class="banner-img">
-                        <img src="images/home/index/04.png" alt="index"/>
+                        <img src="images/home/index/01.png" alt="index"/>
                     </div>
                 </div>
             </div>
@@ -76,16 +75,17 @@
             <div class="row align-items-center">
                 <div class="col-md-6 col-lg-6">
                     <div class="banner-img">
-                        <img src="images/home/index/03.png" alt="index"/>
+                        <img src="images/home/index/02.png" alt="index"/>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6">
                     <div class="banner-content">
-                        <h1>CAM KẾT CHẤT LƯỢNG</h1>
-                        <p>Tất cả sản phẩm chúng tôi cung cấp đều trải qua quá trình kiểm tra và đánh giá nghiêm túc.
-                            Các nhà cung cấp của chúng tôi thường xuyên được đánh giá lại để đảm bảo tuân thủ các chỉ
-                            dấn
-                            về chất lượng của chúng tôi</p>
+                        <h1>
+                            Thế Giới Nông Sản Sạch
+                        </h1>
+                        <p>Các sản phẩm nông sản được bán tại cửa hàng đều có nguồn gốc rõ ràng. Sản phẩm nông sản đa dạng cho khách hàng lựa chọn.
+                            Các sản phẩm rau, củ qủa luôn tươi ngon, được chúng tôi nhập mới hàng ngày. Chúng tôi hướng tới mục tiêu đưa đến tay khách hàng những sản phẩm sạch, an toàn với giá thành phù hợp nhất.
+                        </p>
                         <div class="banner-btn">
                             <a class="btn btn-inline" th:href="@{/products}">
                                 <i class="fas fa-shopping-basket"></i>
@@ -108,7 +108,7 @@
         <ul class="suggest-slider slider-arrow">
             <li th:each="item : ${coutnProductByCategory}">
                 <a class="suggest-card" th:href="@{/productByCategory(id=${item[0]})}">
-                    <img th:src="@{/loadImage(imageName=${item[3]})}" height="150px" width="240px" alt="suggest"/>
+                    <img th:src="@{/loadImage(imageName=${item[3]})}"  style="width: 200px; padding: 1px; object-fit: cover;" alt="suggest"/>
                     <h5>
                         [[${item[1]}]] <span>số lượng : [[${item[2]}]] </span>
                     </h5>
