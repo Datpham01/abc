@@ -54,7 +54,7 @@ public class PostUserController {
         return anonymousUser;
     }
 
-    @GetMapping("/get-all-post")
+    @GetMapping("/getpost")
     public String getAllPosts(Model model, User user) {
         List<Post> posts = postRepository.findAll();
         model.addAttribute("posts", posts);

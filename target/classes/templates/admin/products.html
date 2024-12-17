@@ -132,12 +132,12 @@
 															<input th:field="*{price}" id="price" min = 0 type="number" class="form-control" placeholder="Đơn giá">
 														</div>
 													</div>
-													<div class="col-md-6 pr-0">
-														<div class="form-group form-group-default">
-															<label>Số lượng</label>
-															<input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">
-														</div>
-													</div>
+<!--													<div class="col-md-6 pr-0">-->
+<!--														<div class="form-group form-group-default">-->
+<!--															<label>Số lượng</label>-->
+<!--															<input th:field="*{quantity}" id="quantity" min = 0 type="number" class="form-control" placeholder="Số lượng">-->
+<!--														</div>-->
+<!--													</div>-->
 													<div class="col-md-6 pr-0">
 														<div class="form-group form-group-default">
 															<label>Giảm giá</label>
@@ -183,7 +183,7 @@
 										<th>Thể loại</th>
 										<th>Đơn giá</th>
 										<th>Giảm giá</th>
-										<th>Số lượng</th>
+<!--										<th>Số lượng</th>-->
 										<th>Ngày thêm</th>
 										<th>Xuất xứ</th>
 										<!-- <th style="width: 20%">Mô tả sản phẩm</th> -->
@@ -201,10 +201,10 @@
 										<td>[[${item.category.categoryName}]]</td>
 										<td th:text="${#numbers.formatDecimal(item.price, 1, 'DEFAULT', 0, 'DEFAULT')}+' đ'"></td>
 										<td>[[${#numbers.formatDecimal(item?.discount, 1, 'DEFAULT', 0, 'DEFAULT')}+' %']]</td>
-										<td>[[${item.quantity}]]</td>
+<!--										<td>[[${item.quantity}]]</td>-->
 										<td>[[${item.enteredDate}]]</td>
 										<td>[[${item.origin.originName}]]</td>
-										<!-- 												<td>[[${item.description}]]</td> -->
+										<!-- <td>[[${item.description}]]</td> -->
 										<td>
 											<div class="form-button-action">
 												<a th:href="@{/admin/editProduct/{productId}(productId=${item.productId})}"

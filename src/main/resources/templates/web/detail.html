@@ -1,24 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<meta
-        http-equiv="content-type"
-        content="text/html;charset=utf-8"
-/>
+
+<meta http-equiv="content-type" content="text/html;charset=utf-8"/>
 <head>
     <meta charset="UTF-8"/>
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="author" content="mironcoder"/>
     <meta name="email" content="mironcoder@gmail.com"/>
     <meta name="profile" content="https://themeforest.net/user/mironcoder"/>
     <meta name="template" content="greeny"/>
     <meta name="title" content="greeny - Ecommerce Food Store HTML Template"/>
-    <meta
-            name="keywords"
-            content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"
-    />
+    <meta name="keywords"
+          content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, products, farm, grocery, natural, online"/>
     <title>Harvert ViNa</title>
     <link rel="icon" href="/images/logo.png"/>
     <link rel="stylesheet" href="fonts/flaticon/flaticon.css"/>
@@ -28,23 +22,29 @@
     <link rel="stylesheet" href="vendor/slickslider/slick.min.css"/>
     <link rel="stylesheet" href="vendor/niceselect/nice-select.min.css"/>
     <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css"/>
-    <link rel="stylesheet" th:href="@{css/main.css}"/>
-    <link rel="stylesheet" href="css/contact.css"/>
 
+    <link rel="stylesheet" href="css/index.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+    </style>
 </head>
 <body>
 
 <!--************************************
             Header Start
     *************************************-->
-<header th:replace="~{/web/fragments/header :: header}"></header>
+<header th:replace="~{/web/fragments/header :: header}">
+    <link rel="stylesheet"
+          th:href="~{css/main.css}"/>
+</header>
 <!--************************************
         Header End
 *************************************-->
 
-<section
-        class="single-banner inner-section"
-        style="background: url(images/single-banner.jpg) no-repeat center">
+
+<section class="single-banner inner-section" style="background: url(images/single-banner.jpg) no-repeat center">
     <div class="container">
         <h2>Chi tiết bài viết</h2>
         <ol class="breadcrumb">
@@ -52,59 +52,32 @@
         </ol>
     </div>
 </section>
-<section class="inner-section contact-part">
-    <h3 th:text="${post.title}"></h3>
-    <p><strong>Tác giả:</strong> <span th:text="${post.author}"></span></p>
-    <div th:utext="${post.content}" style="border: none; width: 50%; height: auto;  white-space: pre-wrap;"></div>
-    <a th:href="@{/get-all-post}">Quay lại danh sách</a>
-</section>
-
-
-
-<section class="intro-part">
+<section class="inner-section">
     <div class="container">
-        <div class="row intro-content">
-            <div class="col-sm-6 col-lg-3">
-                <div class="intro-wrap">
-                    <div class="intro-icon">
-                        <i class="fas fa-truck"></i>
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="contact-card">
+                    <!-- Tiêu đề bài viết -->
+                    <h3 th:text="${post.title}"
+                        style="text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #333;"></h3>
+
+                    <!-- Tác giả bài viết -->
+                    <p style="font-size: 16px; margin-bottom: 20px; text-align: center;">
+                        <strong>Tác giả:</strong>
+                        <span th:text="${post.author}" ></span>
+                    </p>
+
+                    <!-- Nội dung bài viết -->
+                    <div th:utext="${post.content}"
+                         style="border: 1px solid #ddd; padding: 20px; width: 100%; max-width: 800px; margin: 0 auto; white-space: pre-wrap; background: #f9f9f9; border-radius: 5px;">
                     </div>
-                    <div class="intro-content">
-                        <h5>Giao Hàng Tận Nhà Miễn Phí</h5>
-                        <p>Giao hàng trong thời gian nhanh nhất để đảm bảo chất lượng tốt nhất cho những sản phẩm bạn đã đặt.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="intro-wrap">
-                    <div class="intro-icon">
-                        <i class="fas fa-sync-alt"></i>
-                    </div>
-                    <div class="intro-content">
-                        <h5>Chính Sách Hoàn Trả</h5>
-                        <p>Chúng tôi luôn đặt lợi ích khách hàng lên hàng đầu với chính sách hoàn trả dễ dàng và minh bạch. Nếu bạn không hài lòng với sản phẩm hoặc phát hiện lỗi trong quá trình vận chuyển, hãy liên hệ với chúng tôi để được hoàn tiền hoặc đổi trả trong thời gian sớm nhất.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="intro-wrap">
-                    <div class="intro-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <div class="intro-content">
-                        <h5>Hệ Thống Hỗ Trợ</h5>
-                        <p>Đội ngũ hỗ trợ khách hàng hoạt động 24/7, sẵn sàng giải đáp mọi thắc mắc và xử lý các vấn đề phát sinh. Bạn có thể liên hệ với chúng tôi qua nhiều kênh như chat trực tuyến, email hoặc hotline để nhận được sự tư vấn và hỗ trợ nhanh chóng, tận tâm.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="intro-wrap">
-                    <div class="intro-icon">
-                        <i class="fas fa-lock"></i>
-                    </div>
-                    <div class="intro-content">
-                        <h5>Cách Thanh Toán An Toàn</h5>
-                        <p>Nhiều hình thức thanh toán làm cho việc đặt hàng của bạn và shop trở nên dễ dàng và tiện lợi hơn rất nhiều.</p>
+
+                    <!-- Nút quay lại -->
+                    <div style="margin: 30px; text-align: center;">
+                        <a th:href="@{/getpost}"
+                           style="display: inline-block; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+                            Quay lại danh sách
+                        </a>
                     </div>
                 </div>
             </div>
@@ -113,13 +86,18 @@
 </section>
 
 
+<!--<section class="inner-section contact-part">-->
+<!--    <h3 th:text="${post.title}"></h3>-->
+<!--    <p><strong>Tác giả:</strong> <span th:text="${post.author}"></span></p>-->
+<!--    <div th:utext="${post.content}" style="border: none; width: 50%; height: auto;  white-space: pre-wrap;"></div>-->
+<!--    <a th:href="@{/get-all-post}">Quay lại danh sách</a>-->
+<!--</section>-->
 
 
 <!--************************************
-             Footer Start
-     *************************************-->
+            Footer Start
+*************************************-->
 <footer th:replace="~{/web/fragments/footer :: footer}"></footer>
-
 <!--************************************
         Footer End
 *************************************-->

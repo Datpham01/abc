@@ -150,7 +150,7 @@ public class ShopController extends CommomController {
 
 		model.addAttribute("products", listProductNew);
 		commomDataService.commonData(model, user);
-		return "web/shop";
+		return "web/shopcategory";
 	}
 
 	// list books by origins
@@ -179,7 +179,7 @@ public class ShopController extends CommomController {
 
 		model.addAttribute("products", listProductNew);
 		commomDataService.commonData(model, user);
-		return "web/shop";
+		return "web/shoporigin";
 	}
 
 }

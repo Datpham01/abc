@@ -39,7 +39,7 @@ public class ReportController {
 		return "admin/statistical";
 	}
 
-	// Statistics by category sold
+	// thong ke theo the loai
 	@RequestMapping(value = "/admin/reportCategory")
 	public String reportcategory(Model model, Principal principal) throws SQLException {
 		User user = userRepository.findByEmail(principal.getName());
@@ -50,10 +50,10 @@ public class ReportController {
 		List<Object[]> listReportCommon = orderDetailRepository.repoWhereCategory();
 		model.addAttribute("listReportCommon", listReportCommon);
 
-		return "admin/statistical";
+		return "admin/sacategory";
 	}
 
-	// Statistics of products sold by year
+	// theo năm
 	@RequestMapping(value = "/admin/reportYear")
 	public String reportyear(Model model, Principal principal) throws SQLException {
 		User user = userRepository.findByEmail(principal.getName());
@@ -64,10 +64,10 @@ public class ReportController {
 		List<Object[]> listReportCommon = orderDetailRepository.repoWhereYear();
 		model.addAttribute("listReportCommon", listReportCommon);
 
-		return "admin/statistical";
+		return "admin/sayear";
 	}
 
-	// Statistics of products sold by month
+	// theo tháng
 	@RequestMapping(value = "/admin/reportMonth")
 	public String reportmonth(Model model, Principal principal) throws SQLException {
 		User user = userRepository.findByEmail(principal.getName());
@@ -78,10 +78,10 @@ public class ReportController {
 		List<Object[]> listReportCommon = orderDetailRepository.repoWhereMonth();
 		model.addAttribute("listReportCommon", listReportCommon);
 
-		return "admin/statistical";
+		return "admin/samonth";
 	}
 
-	// Statistics of products sold by quarter
+	// theo quý
 	@RequestMapping(value = "/admin/reportQuarter")
 	public String reportquarter(Model model, Principal principal) throws SQLException {
 		User user = userRepository.findByEmail(principal.getName());
@@ -92,10 +92,10 @@ public class ReportController {
 		List<Object[]> listReportCommon = orderDetailRepository.repoWhereQUARTER();
 		model.addAttribute("listReportCommon", listReportCommon);
 
-		return "admin/statistical";
+		return "admin/saquater";
 	}
 
-	// Statistics by user
+	// theo khách hàng
 	@RequestMapping(value = "/admin/reportOrderCustomer")
 	public String reportordercustomer(Model model, Principal principal) throws SQLException {
 		User user = userRepository.findByEmail(principal.getName());
@@ -106,7 +106,7 @@ public class ReportController {
 		List<Object[]> listReportCommon = orderDetailRepository.reportCustommer();
 		model.addAttribute("listReportCommon", listReportCommon);
 
-		return "admin/statistical";
+		return "admin/sacustomer";
 	}
 	
 }
