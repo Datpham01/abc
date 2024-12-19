@@ -27,6 +27,51 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <style>
+        /* Container chứa các nút social */
+.social-buttons {
+    position: fixed;
+    bottom: 40px;  /* Khoảng cách 20px từ đáy màn hình */
+    left: 20px;    /* Khoảng cách 20px từ bên trái màn hình */
+    z-index: 1000; /* Đảm bảo nút nổi trên các phần tử khác */
+    display: flex;  /* Sắp xếp các nút theo chiều ngang */
+    gap: 10px;     /* Khoảng cách giữa các nút */
+    flex-direction: column;  /* Sắp xếp các nút theo chiều dọc */
+}
+
+/* Các nút social */
+.social-btn {
+    background-color: green; /* Màu nền của nút */
+    color: white;
+    padding: 12px;
+    border-radius: 50%;  /* Tạo hình tròn cho nút */
+    font-size: 24px;     /* Kích thước biểu tượng */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Màu nền riêng cho từng nút */
+.facebook {
+    background-color: #3b5998; /* Màu xanh của Facebook */
+}
+
+.messenger {
+    background-color: #0078FF; /* Màu xanh dương của Messenger */
+}
+
+.chat {
+    background-color: #25D366; /* Màu xanh lá của WhatsApp */
+}
+
+<!--/* Cải thiện kích thước của Messenger */-->
+<!--df-messenger {-->
+<!--    margin-top: 10px;-->
+<!--    width: 300px;  /* Kích thước của cửa sổ chat */-->
+<!--    height: 400px; /* Kích thước của cửa sổ chat */-->
+}
+    </style>
 </head>
 <body>
 
@@ -691,13 +736,32 @@
 <script src="js/slick.js"></script>
 <script src="js/main.js"></script>
 
-<!--	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>-->
+	<script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
 <!--	<df-messenger-->
 <!--	  intent="WELCOME"-->
 <!--	  chat-title="Hỗ_trợ_khách_hàng"	-->
 <!--	  agent-id="43d594b7-0744-4670-b827-407b2255c6f3"-->
 <!--	  language-code="vi"-->
 <!--	></df-messenger>-->
-
+<!-- Nút chat, Facebook và Messenger -->
+<div class="social-buttons">
+    <a href="https://www.facebook.com" target="_blank" class="social-btn facebook">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+    <a href="https://m.me" target="_blank" class="social-btn messenger">
+        <i class="fab fa-facebook-messenger"></i>
+    </a>
+    <a href="https://t.me" target="_blank" class="social-btn chat">
+        <i class="fas fa-comments"></i>
+    </a>
+    <a>
+        <df-messenger
+                intent="WELCOME"
+                chat-title="Hỗ_trợ_khách_hàng"
+                agent-id="43d594b7-0744-4670-b827-407b2255c6f3"
+                language-code="vi"
+        ></df-messenger>
+    </a>
+</div>
 </body>
 </html>

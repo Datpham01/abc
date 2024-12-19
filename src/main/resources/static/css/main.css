@@ -278,7 +278,8 @@ button:focus {
 }
 .backtop {
   position: fixed;
-  right: 20px;
+  top: 75%;  /* Căn giữa theo chiều dọc */
+      right: 2%; /* Căn giữa theo chiều ngang */
   bottom: 20px;
   z-index: 2;
   width: 48px;

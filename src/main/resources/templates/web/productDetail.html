@@ -30,6 +30,18 @@
     <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css"/>
     <link rel="stylesheet" href="css/main.css"/>
     <link rel="stylesheet" href="css/product-details.css"/>
+
+
+    <style>
+        .zoom-image {
+            transition: transform 0.3s ease; /* Thêm hiệu ứng chuyển động */
+            width: 300px;
+        }
+
+        .zoom-image:hover {
+            transform: scale(1.5); /* Phóng to ảnh khi hover */
+        }
+    </style>
 </head>
 <body>
 
@@ -61,18 +73,19 @@
                         <label class="details-label new">new</label>
                         <label class="details-label off">- [[${product.discount + '%'}]]</label>
                     </div>
-                    <ul class="details-preview">
-                        <li><img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" style="width=300px"/></li>
+                    <ul class="details-preview ">
+                        <li><img id="main-image"  th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" class="zoom-image" style="width=300px"/></li>
                     </ul>
                     <ul class="details-thumb">
+                        <!-- Ảnh nhỏ -->
                         <li>
-                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" class="thumbnail" onclick="changeMainImage('/loadImage?imageName='+${product.productImage})"/>
                         </li>
                         <li>
-                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" class="thumbnail" onclick="changeMainImage('/loadImage?imageName='+${product.productImage})"/>
                         </li>
                         <li>
-                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" />
+                            <img th:src="@{'/loadImage?imageName='+${product.productImage}}" alt="product" class="thumbnail" onclick="changeMainImage('/loadImage?imageName='+${product.productImage})"/>
                         </li>
                     </ul>
 
@@ -135,7 +148,6 @@
                             </li>
                         </ul>
                     </div>
-
 
                     <th:block th:if="${product.quantity != 0}">
                         <div class="details-add-group">
@@ -442,7 +454,11 @@
 <!--************************************
         Footer End
 *************************************-->
-
+<script>
+    function changeMainImage(imagePath) {
+    document.getElementById('main-image').src = imagePath;  // Cập nhật ảnh chính khi click vào ảnh nhỏ
+}
+</script>
 
 <script src="vendor/bootstrap/jquery-1.12.4.min.js"></script>
 <script src="vendor/bootstrap/popper.min.js"></script>
