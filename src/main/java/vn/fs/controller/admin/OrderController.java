@@ -22,9 +22,11 @@ import vn.fs.dto.OrderExcelExporter;
 import vn.fs.entities.Order;
 import vn.fs.entities.OrderDetail;
 import vn.fs.entities.Product;
+import vn.fs.entities.ProductInventory;
 import vn.fs.entities.User;
 import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.OrderRepository;
+import vn.fs.repository.ProductInventoryRepository;
 import vn.fs.repository.ProductRepository;
 import vn.fs.repository.UserRepository;
 import vn.fs.service.OrderDetailService;
@@ -52,6 +54,9 @@ public class OrderController {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	ProductInventoryRepository productInventoryRepository;
 
 	@ModelAttribute(value = "user")
 	public User user(Model model, Principal principal, User user) {
@@ -100,6 +105,16 @@ public class OrderController {
 		Order oReal = o.get();
 		oReal.setStatus((short) 3);
 		orderRepository.save(oReal);
+
+		List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(id);
+
+		for(OrderDetail orderDetail : orderDetailList) {
+			ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(orderDetail.getProduct().getProductId());
+			if(productInventory != null) {
+				productInventory.setQuantity(productInventory.getQuantity()+ orderDetail.getQuantity());
+				productInventoryRepository.save(productInventory);
+			}
+		}
 
 		return new ModelAndView("forward:/admin/orders", model);
 	}

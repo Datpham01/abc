@@ -24,9 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import vn.fs.commom.CommomDataService;
 import vn.fs.entities.Order;
 import vn.fs.entities.OrderDetail;
+import vn.fs.entities.ProductInventory;
 import vn.fs.entities.User;
 import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.OrderRepository;
+import vn.fs.repository.ProductInventoryRepository;
 import vn.fs.repository.UserRepository;
 
 
@@ -44,6 +46,9 @@ public class ProfileController extends CommomController{
 
 	@Autowired
 	CommomDataService commomDataService;
+
+	@Autowired
+	ProductInventoryRepository productInventoryRepository;
 
 	@GetMapping(value = "/profile")
 	public String profile(Model model, Principal principal, User user, Pageable pageable,
@@ -127,6 +132,16 @@ public class ProfileController extends CommomController{
 		Order oReal = o.get();
 		oReal.setStatus((short) 3);
 		orderRepository.save(oReal);
+
+		List<OrderDetail> orderDetailList = orderDetailRepository.findByOrderId(id);
+
+		for(OrderDetail orderDetail : orderDetailList) {
+			ProductInventory productInventory = productInventoryRepository.findProductInventoryByProduct_ProductId(orderDetail.getProduct().getProductId());
+			if(productInventory != null) {
+				productInventory.setQuantity(productInventory.getQuantity()+ orderDetail.getQuantity());
+				productInventoryRepository.save(productInventory);
+			}
+		}
 
 		return new ModelAndView("redirect:/profile", model);
 	}
