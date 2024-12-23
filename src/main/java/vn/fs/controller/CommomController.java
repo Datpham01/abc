@@ -35,7 +35,6 @@ public class CommomController {
 	@ModelAttribute(value = "user")
 	public User user(Model model, Principal principal) {
 		if (principal != null) {
-			System.out.println(principal);
 			if (principal instanceof OAuth2AuthenticationToken) {
 				OAuth2AuthenticationToken oAuth2Token = (OAuth2AuthenticationToken) principal;
 				Map<String, Object> attributes = oAuth2Token.getPrincipal().getAttributes();

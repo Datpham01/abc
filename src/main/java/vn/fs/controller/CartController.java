@@ -175,7 +175,12 @@ public class CartController extends CommomController {
     @GetMapping(value = "/checkout")
     public String checkOut(Model model, User user) {
 
-        Order order = new Order();
+        Order order = (Order) session.getAttribute("order");
+        if (order == null) {
+            order = new Order();
+            session.setAttribute("order", order);
+        }
+
         model.addAttribute("order", order);
 
         Collection<CartItem> cartItems = shoppingCartService.getCartItems();
@@ -222,7 +227,7 @@ public class CartController extends CommomController {
         List<CartItem> outOfStockItems = checkQuantity(cartItems);
         if (!outOfStockItems.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Một số sản phẩm không còn đủ hàng trong kho.");
-            model.addAttribute("order", order);
+            session.setAttribute("order", order);
             return "redirect:/checkout";
         }
 
@@ -370,6 +375,10 @@ public class CartController extends CommomController {
     public String checkoutSuccess(Model model, User user) {
         commomDataService.commonData(model, user);
 
+        if (!model.containsAttribute("order")) {
+            model.addAttribute("order", new Order());
+        }
+
         return "web/checkout_success";
 
     }
@@ -387,8 +396,15 @@ public class CartController extends CommomController {
     @PutMapping(value = "/updateQuantity", params = {"productId", "quantity"})
     public String updateQ(ModelMap model, HttpSession session, @RequestParam("productId") Long id,
                           @RequestParam("quantity") int qty) {
-        shoppingCartService.updateQuantity(id, qty);
-        ;
+        shoppingCartService.updateQuantity(id, qty);;
+
+        Order order = (Order) session.getAttribute("order");
+        if (order == null) {
+            order = new Order();
+            session.setAttribute("order", order);
+        }
+
+        model.addAttribute("order", order);
 
         return "web/shoppingCart_checkout";
     }
